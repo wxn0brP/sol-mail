@@ -13,7 +13,7 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "build": "tsc --noEmit && bun run build.ts"
+        "build": "node build.js"
     },
     "devDependencies": {
         "typescript": "*"
