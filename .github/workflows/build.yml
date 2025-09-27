@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+concurrency:
+  group: build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: wxn0brP/workflow-dist/.github/workflows/build-ts.yml@main
+    with:
+      scriptsHandling: "remove-all"
+      files: "front/dist dist public LICENSE package.json README.md"
+      customCommands: |
+        cd front
+        npm i
+        npm run build

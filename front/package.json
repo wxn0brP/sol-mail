@@ -1,0 +1,27 @@
+{
+    "name": "front",
+    "version": "0.0.1",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "description": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wxn0brP/front.git"
+    },
+    "homepage": "https://github.com/wxn0brP/front",
+    "author": "wxn0brP",
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "build": "tsc --noEmit && bun run build.ts"
+    },
+    "devDependencies": {
+        "typescript": "*"
+    },
+    "dependencies": {
+        "@wxn0brp/flanker-ui": "^0.4.0",
+        "esbuild": "^0.25.10",
+        "esbuild-style-plugin": "^1.6.3",
+        "sass": "^1.93.2"
+    }
+}
