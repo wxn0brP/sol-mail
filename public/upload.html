@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sol Mail - Upload</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="app">
+        <h1>File Upload</h1>
+        <form>
+            <input type="file" name="filefield" id="filefield" multiple>
+            <input type="submit" value="Upload">
+        </form>
+        <p id="message"></p>
+    </div>
+    <script>
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+        const fileInput = document.querySelector("#filefield");
+        const message = document.querySelector("#message");
+
+        document.querySelector("form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const formData = new FormData();
+
+            for (const file of fileInput.files) {
+                formData.append("filefield", file);
+            }
+
+            try {
+                const response = await fetch("/api/files", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": token
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    message.textContent = "File upload finished.";
+                } else {
+                    const error = await response.json();
+                    console.error(error);
+                    message.textContent = error.message || "Upload failed";
+                }
+            } catch (error) {
+                console.error(error);
+                message.textContent = "An error occurred during upload.";
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -3,3 +3,17 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --yellow: #FFD700;
+    --red: #E74C3C;
+    --green: #27AE60;
+    --back: #212121;
+    --txt: wheat;
+}
+
+body {
+    background: var(--back);
+    color: var(--txt);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
