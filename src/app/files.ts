@@ -3,6 +3,7 @@ import busboy from "busboy";
 import path from "path";
 import fs from "fs";
 import { pipeline } from "stream/promises";
+import { getContentType } from "@wxn0brp/falcon-frame/helpers";
 
 const router = new Router();
 
@@ -170,11 +171,9 @@ router.get("/:mailName/:fileName", async (req, res) => {
             return res.json({ message: "File not found" });
         }
 
-        res.setHeader("Content-Type", "application/octet-stream");
-        res.setHeader("Content-Disposition", `attachment; filename="${sanitizedFileName}"`);
-
-        const fileStream = fs.createReadStream(filePath);
-        fileStream.pipe(res);
+        const ct = getContentType(filePath);
+        res.setHeader("Content-Type", ct);
+        res.sendFile(filePath);
     } catch (error) {
         console.error("Error downloading file:", error);
         res.status(500);
