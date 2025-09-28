@@ -22,6 +22,17 @@ export function sanitizeFileName(name: string): string {
     return name.replace(/[^a-zA-Z0-9-_.]/g, "_");
 }
 
+let MAX_FILE_SIZE = 0;
+if (process.env.MAX_FILE_SIZE) {
+    MAX_FILE_SIZE = +process.env.MAX_FILE_SIZE;
+} else {
+    MAX_FILE_SIZE = 20;
+}
+MAX_FILE_SIZE *= 1024 * 1024;
+const MAX_FILES_COUNT = +process.env.MAX_FILES_COUNT || 10;
+console.log(`File upload limit: ${MAX_FILE_SIZE}B (${MAX_FILE_SIZE / 1024 / 1024}MB)`);
+console.log(`File count limit: ${MAX_FILES_COUNT} files`);
+
 router.customParser("/:mailName", async (req, res) => {
     try {
         const user = req.user;
@@ -35,19 +46,31 @@ router.customParser("/:mailName", async (req, res) => {
             res.writeHead(400, { "Connection": "close" });
             return res.json({ err: true, msg: "Mail name is required" });
         }
+        const sanitizedUserName = sanitizeDirName(user.name);
+        const sanitizedMailName = sanitizeDirName(mailName);
+
+        if (fs.existsSync(path.join("data", "files", sanitizedUserName, sanitizedMailName))) {
+            res.writeHead(409, { "Connection": "close" });
+            return res.json({ err: true, msg: "Mail directory already exists" });
+        }
 
         const additionalFields: { [key: string]: string } = {};
         const uploads = [];
 
-        const bb = busboy({ headers: req.headers });
+        const bb = busboy({
+            headers: req.headers,
+            limits: {
+                fileSize: MAX_FILE_SIZE,
+                files: MAX_FILES_COUNT,
+                fields: MAX_FILES_COUNT + 2
+            }
+        });
 
         bb.on("field", (fieldname, value) => {
             additionalFields[fieldname] = value.toString();
         });
 
         bb.on("file", (fieldname, file, { filename }) => {
-            const sanitizedUserName = sanitizeDirName(user.name);
-            const sanitizedMailName = sanitizeDirName(mailName);
             const mailDir = path.join("data", "files", sanitizedUserName, sanitizedMailName);
             if (!fs.existsSync(mailDir)) {
                 fs.mkdirSync(mailDir, { recursive: true });
