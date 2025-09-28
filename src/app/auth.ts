@@ -3,13 +3,24 @@ import { jwtVerify } from "jose";
 import { registerHandler } from "./register";
 import { loginHandler } from "./login";
 import { setToken } from "../utils/token";
+import { AnotherCache } from "@wxn0brp/ac";
+import { User } from "../types/auth";
+import { db } from "../db";
+import { cleanToken, Token } from "../utils/cleanToken";
 const router = new Router();
+
+export const cache = new AnotherCache<Pick<User, "name" | "_id">>();
+export const inDbCache = new AnotherCache<Token>({
+    ttl: 30 * 1000 // 30 s
+});
 
 router.post("/logout", async (req, res) => {
     res.setHeader(
         "Set-Cookie",
         "token=; Path=/; SameSite=Lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
     );
+
+    await db.master.removeOne("token", { _id: req.cookies.token });
 
     res.status(200);
     return res.json({ msg: "Logout successful" });
@@ -48,6 +59,28 @@ const authMiddleware: RouteHandler = async (req, res, next) => {
         return res.json({ msg: "Unauthorized" });
     }
 
+    if (!inDbCache.has(token)) {
+        await cleanToken();
+        const inDbToken = await db.master.findOne<Token>("token", { _id: token });
+        if (!inDbToken) {
+            res.status(401);
+            return res.json({ msg: "Unauthorized" });
+        }
+
+        if (inDbToken.exp < Date.now()) {
+            res.status(401);
+            await db.master.removeOne("token", { _id: token });
+            return res.json({ msg: "Unauthorized" });
+        }
+
+        inDbCache.set(token, inDbToken);
+    }
+
+    if (cache.has(token)) {
+        req.user = cache.get(token);
+        return next();
+    }
+
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
     try {
@@ -59,6 +92,7 @@ const authMiddleware: RouteHandler = async (req, res, next) => {
             name: payload.name,
             _id: payload._id
         };
+
         next();
     } catch (error) {
         res.status(401);

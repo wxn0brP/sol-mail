@@ -26,6 +26,7 @@ export async function setToken(user: Pick<User, "name" | "_id">, res?: FFRespons
 
     return {
         token: jwt,
-        exp
+        exp,
+        expirationTime
     }
 }
