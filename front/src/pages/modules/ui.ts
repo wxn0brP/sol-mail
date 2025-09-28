@@ -1,49 +1,5 @@
 import { fetchFiles } from "./api";
-import { popupSupported } from "./extensions";
-import { getIconForFile } from "./file-utils";
-import { openFilePopup } from "./popup";
-
-function displayFiles(mailName: string, files: string[]) {
-    const container = qs(`#files-${mailName}`);
-
-    if (!files || files.length === 0) {
-        container.innerHTML = "<p>No files in this mail.</p>";
-        return;
-    }
-
-    let html = "<ul>";
-    files.forEach(file => {
-        const fileUrl = `/api/files/${encodeURIComponent(mailName)}/${encodeURIComponent(file)}`;
-        const icon = getIconForFile(file);
-        html += `
-            <li>
-                <a href="${fileUrl}" data-filename="${file}" target="_blank">
-                    <span class="file-icon">${icon}</span>
-                    <span class="file-name">${file}</span>
-                </a>
-            </li>
-        `;
-    });
-    html += "</ul>";
-
-    container.innerHTML = html;
-
-    container.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", (e) => {
-            const target = a as HTMLAnchorElement;
-            const url = target.href;
-            const filename = target.dataset.filename;
-            if (!filename) return;
-
-            const extension = filename.split(".").pop()?.toLowerCase() || "";
-
-            if (popupSupported.includes(extension)) {
-                e.preventDefault();
-                openFilePopup(url, filename);
-            }
-        });
-    });
-}
+import { displayFiles } from "./displayFiles";
 
 async function loadAndDisplayFiles(mailName: string, buttonEl: HTMLButtonElement) {
     buttonEl.textContent = "Loading...";
@@ -57,7 +13,12 @@ async function loadAndDisplayFiles(mailName: string, buttonEl: HTMLButtonElement
         container.innerHTML = `<p class="error-message">${res.msg}</p>`;
         buttonEl.textContent = "View Files";
     } else {
-        displayFiles(mailName, res.files);
+        displayFiles({
+            mailName,
+            files: res.files,
+            apiPath: "/api/files",
+            container
+        });
         container.classList.add("loaded");
         container.style.display = "block";
         buttonEl.textContent = "Hide Files";

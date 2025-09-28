@@ -5,7 +5,7 @@ import { fetchMails } from "./modules/api";
 import { displayMails } from "./modules/ui";
 
 checkTokenRefresh();
-const mailsContainer = qs("#mails-container");
+const mailsContainer = qs(".mails-container");
 
 try {
     const res = await fetchMails();

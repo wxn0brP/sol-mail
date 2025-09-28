@@ -14,11 +14,11 @@ if (!fs.existsSync("data/files")) {
     fs.mkdirSync("data/files");
 }
 
-function sanitizeDirName(name: string): string {
+export function sanitizeDirName(name: string): string {
     return name.replace(/[^a-zA-Z0-9-_]/g, "_");
 }
 
-function sanitizeFileName(name: string): string {
+export function sanitizeFileName(name: string): string {
     return name.replace(/[^a-zA-Z0-9-_.]/g, "_");
 }
 
@@ -27,13 +27,13 @@ router.customParser("/:mailName", async (req, res) => {
         const user = req.user;
         if (!user) {
             res.writeHead(401, { "Connection": "close" });
-            return res.end("Unauthorized");
+            return res.json({ err: true, msg: "Unauthorized" });
         }
 
         const mailName = req.params.mailName;
         if (!mailName) {
             res.writeHead(400, { "Connection": "close" });
-            return res.end("Mail name is required");
+            return res.json({ err: true, msg: "Mail name is required" });
         }
 
         const additionalFields: { [key: string]: string } = {};
@@ -90,9 +90,7 @@ router.customParser("/:mailName", async (req, res) => {
 router.get("/", async (req) => {
     try {
         const user = req.user;
-        if (!user) {
-            return { status: 401, message: "Unauthorized" };
-        }
+        if (!user) return { status: 401, message: "Unauthorized" };
 
         const sanitizedUserName = sanitizeDirName(user.name);
         const userDir = path.join("data", "files", sanitizedUserName);
@@ -116,9 +114,7 @@ router.get("/", async (req) => {
 router.get("/:mailName", async (req) => {
     try {
         const user = req.user;
-        if (!user) {
-            return { status: 401, message: "Unauthorized" };
-        }
+        if (!user) return { status: 401, message: "Unauthorized" };
 
         const mailName = req.params.mailName;
         if (!mailName) {
@@ -153,13 +149,7 @@ router.get("/:mailName/:fileName", async (req, res) => {
             return res.json({ message: "Unauthorized" });
         }
 
-        const mailName = req.params.mailName;
-        const fileName = req.params.fileName;
-
-        if (!mailName || !fileName) {
-            res.status(400);
-            return res.json({ message: "Mail name and file name are required" });
-        }
+        const { mailName, fileName } = req.params;
 
         const sanitizedUserName = sanitizeDirName(user.name);
         const sanitizedMailName = sanitizeDirName(mailName);
