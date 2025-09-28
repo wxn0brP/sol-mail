@@ -1,8 +1,8 @@
 import { RouteHandler } from "@wxn0brp/falcon-frame";
 import { createHash } from "crypto";
-import { SignJWT } from "jose";
 import { db } from "../db";
 import { User } from "../types/auth";
+import { setToken } from "../utils/token";
 
 export const loginHandler: RouteHandler = async (req, res) => {
     try {
@@ -24,26 +24,8 @@ export const loginHandler: RouteHandler = async (req, res) => {
             return { err: true, msg: "Invalid credentials" };
         }
 
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-        const alg = "HS256";
-
-        const jwt = await new SignJWT({ name: user.name, _id: user._id })
-            .setProtectedHeader({ alg })
-            .setIssuedAt()
-            .setIssuer("urn:example:issuer")
-            .setAudience("urn:example:audience")
-            .setExpirationTime("2h")
-            .sign(secret);
-
-        const expirationTime = 2 * 60 * 60 * 1000;
-        const expirationDate = new Date(Date.now() + expirationTime);
-
-        res.setHeader(
-            "Set-Cookie",
-            `token=${jwt}; Path=/; Secure=false; SameSite=Lax; Expires=${expirationDate.toUTCString()}`
-        );
-
-        return { err: false, msg: "Login successful" };
+        const { exp } = await setToken(user, res);
+        return { err: false, msg: "Login successful", expiresAt: exp.getTime() };
     } catch (error) {
         console.error(error);
         res.status(500);

@@ -1,5 +1,8 @@
-import "./upload.scss";
 import "../utils/requireLogin";
+import { checkTokenRefresh } from "../utils/tokenRefresh";
+import "./upload.scss";
+
+checkTokenRefresh();
 const uploadForm = qs("form");
 
 const fileInput = qs("#filefield") as HTMLInputElement;

@@ -1,5 +1,8 @@
 import { cookies } from "../utils/cookies";
+import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./login.scss";
+
+checkTokenRefresh(false);
 const loginForm = qs<HTMLFormElement>("form");
 const errorMessage = qs("#error-message");
 
@@ -29,5 +32,8 @@ loginForm.on("submit", async (event) => {
 
     if (data.err) {
         errorMessage.innerHTML = data.msg;
-    } else next();
+    } else {
+        localStorage.setItem("tokenExpiresAt", data.expiresAt);
+        next();
+    }
 });

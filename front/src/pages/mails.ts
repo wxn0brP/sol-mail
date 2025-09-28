@@ -1,9 +1,12 @@
-import "./mails.scss";
 import "../utils/requireLogin";
+import { checkTokenRefresh } from "../utils/tokenRefresh";
+import "./mails.scss";
 import { fetchMails } from "./modules/api";
 import { displayMails } from "./modules/ui";
 
+checkTokenRefresh();
 const mailsContainer = qs("#mails-container");
+
 try {
     const res = await fetchMails();
     if (res.err) {
