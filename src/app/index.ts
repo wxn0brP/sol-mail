@@ -12,7 +12,7 @@ router.use("/api", api);
 router.use("/auth", authRouter);
 
 const app = new Router();
-app.static("/", "public");
+app.static("/", "public/assets");
 app.static("/", "front/dist");
 router.use("/app", app);
 
