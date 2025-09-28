@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sol Mail | {{ title }}</title>
+    <link rel="stylesheet" href="/app/index.css">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/page/login">Login</a></li>
+            <li><a href="/page/upload">Upload Files</a></li>
+            <li><a href="/page/mails">View Your Mails</a></li>
+        </ul>
+    </nav>
+    <script src="/app/html.js"></script>
+    {{ body }}
+    <script src="/app/pages/{{ name }}.js" type="module"></script>
+    <link rel="stylesheet" href="/app/pages/{{ name }}.css">
+</body>
+
+</html>

@@ -12,8 +12,7 @@ const app = new FalconFrame({
     }
 });
 
-app.static("public");
-app.static("front/dist");
+app.get("/", (_, res) => res.redirect("/page/upload"));
 app.use("/", masterRouter);
 
 app.get("/*", () => ({ status: 404, message: "Not Found" }));

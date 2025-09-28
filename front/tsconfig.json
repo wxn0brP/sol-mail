@@ -7,9 +7,10 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "outDir": "./dist",
-        "declaration": true,
+        "sourceMap": true,
         "types": [
-            "esbuild-style-plugin"
+            "esbuild-style-plugin",
+            "@wxn0brp/flanker-ui"
         ]
     },
     "include": [

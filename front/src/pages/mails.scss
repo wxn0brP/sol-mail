@@ -1,0 +1,54 @@
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--yellow);
+}
+
+#mails-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.mail-item {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.mail-item:hover {
+    background-color: #444;
+    border-color: var(--yellow);
+}
+
+.mail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.mail-subject {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--txt);
+}
+
+.mail-sender {
+    color: #ccc;
+}
+
+.mail-date {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+p {
+    text-align: center;
+    font-style: italic;
+    color: #aaa;
+}

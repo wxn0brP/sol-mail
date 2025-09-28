@@ -1,63 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sol Mail - Login</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-
-<body>
-    <div id="app">
-        <h1>Login</h1>
-        <form id="login-form">
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p id="error-message" style="color: red;"></p>
+<h1>Login</h1>
+<form>
+    <div>
+        <label>
+            Name:
+            <input type="text" name="name" required>
+        </label>
     </div>
-    <script>
-        const errorMessage = document.querySelector("#error-message");
-        const nameInput = document.querySelector("#name");
-        const passwordInput = document.querySelector("#password");
-
-        document.querySelector("#login-form").addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const name = nameInput.value;
-            const pass = passwordInput.value;
-
-            try {
-                const response = await fetch("/auth/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name, pass })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    localStorage.setItem("token", data.token);
-                    window.location.href = "/upload";
-                } else {
-                    const error = await response.json();
-                    console.error(error);
-                    errorMessage.textContent = error.message || "Login failed";
-                }
-            } catch (error) {
-                console.error(error);
-                errorMessage.textContent = "An error occurred during login.";
-            }
-        });
-    </script>
-</body>
-
-</html>
+    <div>
+        <label>
+            Password:
+            <input type="password" name="password" required>
+        </label>
+    </div>
+    <button type="submit">Login</button>
+</form>
+<p id="error-message" class="error-message"></p>
