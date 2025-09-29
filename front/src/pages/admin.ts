@@ -2,6 +2,7 @@ import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./admin.scss";
 import { displayFiles } from "./modules/displayFiles";
+import "./modules/search";
 
 checkTokenRefresh();
 const app = qs("#app");

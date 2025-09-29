@@ -8,3 +8,28 @@ summary {
 .mails-container {
     margin-bottom: 2rem;
 }
+
+.hide-res {
+    display: none;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    label {
+        width: 600px;
+    }
+
+    #search {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: var(--background);
+        color: var(--text-color);
+    }
+}
