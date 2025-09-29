@@ -1,4 +1,4 @@
-import { RouteHandler, Router } from "@wxn0brp/falcon-frame";
+import { FFResponse, RouteHandler, Router } from "@wxn0brp/falcon-frame";
 import { User } from "../types/auth";
 import { db } from "../db";
 import { existsSync, readdirSync } from "fs";
@@ -69,6 +69,17 @@ router.get("/files/:user/:mail/:file", async (req, res) => {
     const ct = getContentType(filePath);
     res.setHeader("Content-Type", ct);
     res.sendFile(filePath);
+});
+
+export const sseClients = new Set<FFResponse>();
+export function notifyAdmin(data: string | object) {
+    sseClients.forEach(res => res.sseSend(data));
+}
+
+router.get("/sse", async (req, res) => {
+    res.sseInit();
+    sseClients.add(res);
+    req.on("close", () => sseClients.delete(res));
 });
 
 export {

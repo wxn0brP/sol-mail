@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import { pipeline } from "stream/promises";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
+import { notifyAdmin } from "./admin";
 
 const router = new Router();
 
@@ -56,6 +57,11 @@ router.customParser("/:mailName", async (req, res) => {
 
         const additionalFields: { [key: string]: string } = {};
         const uploads = [];
+        const mail = {
+            user: user.name,
+            name: mailName,
+            files: []
+        }
 
         const bb = busboy({
             headers: req.headers,
@@ -81,6 +87,8 @@ router.customParser("/:mailName", async (req, res) => {
             console.log(`Uploading to: ${saveTo}`);
             const uploadPromise = pipeline(file, fs.createWriteStream(saveTo));
             uploads.push(uploadPromise);
+
+            mail.files.push(sanitizedFileName);
         });
 
         bb.on("finish", async () => {
@@ -88,6 +96,7 @@ router.customParser("/:mailName", async (req, res) => {
                 await Promise.all(uploads);
                 res.writeHead(200, { "Connection": "close" });
                 res.json({ err: false, msg: "File uploaded successfully" });
+                notifyAdmin(mail);
             } catch (err) {
                 console.error("Pipeline failed.", err);
                 res.writeHead(500, { "Connection": "close" });
