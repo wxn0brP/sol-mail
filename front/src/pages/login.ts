@@ -9,7 +9,7 @@ const errorMessage = qs("#error-message");
 function next() {
     const urlParams = new URLSearchParams(window.location.search);
     const next = urlParams.get("next") || "page/upload";
-    window.location.href = window.location.origin + "/" + next;
+    window.location.href = window.location.origin + ("/" + next).replace("//", "/");
 }
 
 if (cookies.token) {

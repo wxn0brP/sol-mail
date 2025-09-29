@@ -17,3 +17,4 @@ export async function cleanToken() {
 }
 
 setInterval(cleanToken, 10 * 60 * 1000);
+cleanToken();
