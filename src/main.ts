@@ -12,6 +12,10 @@ const app = new FalconFrame({
     }
 });
 
+app.get("/server.find", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.end("ok");
+});
 app.get("/", (_, res) => res.redirect("/page/upload"));
 app.use("/", masterRouter);
 

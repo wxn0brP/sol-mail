@@ -1,0 +1,10 @@
+<script>
+    const s = () => location.href = "/find.html";
+    const server = localStorage.getItem("server");
+    if (!server) s();
+    fetch(`http://${server}:19851/server.find`).then(res => {
+        if (res.ok)
+            location.href = `http://${server}:19851`;
+        else s();
+    }).catch(() => s());
+</script>

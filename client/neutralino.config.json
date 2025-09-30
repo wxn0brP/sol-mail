@@ -1,0 +1,56 @@
+{
+    "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
+    "applicationId": "com.wxn0brp.solmail",
+    "version": "0.0.1",
+    "defaultMode": "window",
+    "port": 0,
+    "documentRoot": "/resources/",
+    "url": "/",
+    "enableServer": true,
+    "enableNativeAPI": true,
+    "tokenSecurity": "one-time",
+    "nativeAllowList": [
+        "os.*"
+    ],
+    "logging": {
+        "enabled": false,
+        "writeToLogFile": false
+    },
+    "globalVariables": {},
+    "modes": {
+        "window": {
+            "title": "Sol Mail",
+            "width": 1600,
+            "height": 800,
+            "minWidth": 800,
+            "minHeight": 600,
+            "center": true,
+            "fullScreen": false,
+            "alwaysOnTop": false,
+            "icon": "/resources/favicon.png",
+            "enableInspector": false,
+            "borderless": false,
+            "maximize": true,
+            "hidden": false,
+            "resizable": true,
+            "exitProcessOnClose": true
+        },
+        "chrome": {
+            "width": 1600,
+            "height": 800,
+            "args": "--user-agent=\"Neutralinojs chrome mode\"",
+            "nativeBlockList": [
+                "filesystem.*",
+                "os.*"
+            ]
+        }
+    },
+    "cli": {
+        "binaryName": "sol-mail",
+        "resourcesPath": "/resources/",
+        "extensionsPath": "/extensions/",
+        "clientLibrary": "/resources/js/neutralino.js",
+        "binaryVersion": "6.3.0",
+        "clientVersion": "6.3.0"
+    }
+}

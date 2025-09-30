@@ -1,0 +1,40 @@
+name: Build and Release Neutralino App
+
+on:
+  push:
+    paths:
+      - "./client/**"
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install Neutralino CLI
+        run: npm install -g @neutralinojs/neu
+
+      - name: Verify Neutralino CLI Installation
+        run: neu --version
+
+      - name: Build Neutralino App
+        run: cd client && neu build --release
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest Build"
+          draft: false
+          prerelease: false
+          files: ./client/dist/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
