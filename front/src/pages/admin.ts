@@ -6,6 +6,7 @@ import "./modules/search";
 
 checkTokenRefresh();
 const app = qs("#app");
+const notifications = qs("#notifications");
 
 interface User {
     name: string;
@@ -109,4 +110,11 @@ event.onmessage = (event) => {
         apiPath: "/api/admin/files",
         container: qs(`files-${data.user}-${data.name}`, 1)
     });
+
+    const notification = document.createElement("li");
+    notification.innerHTML = `<b>${data.user}</b> - <b>${data.name}</b>`;
+    notifications.appendChild(notification);
+    notification.addEventListener("click", () => {
+        notification.remove();
+    }, { once: true });
 }

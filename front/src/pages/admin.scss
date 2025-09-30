@@ -38,3 +38,26 @@ section {
         color: var(--text-color);
     }
 }
+
+aside {
+    position: absolute;
+    top: 70px;
+    right: 10;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #222;
+    max-width: 300px;
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+}
