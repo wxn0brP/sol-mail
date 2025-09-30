@@ -6,6 +6,7 @@ esbuild.build({
     entryPoints: [
         "src/html.ts",
         "src/index.ts",
+        "src/logout.ts",
         "src/pages/*.ts",
     ],
     outdir: "dist",

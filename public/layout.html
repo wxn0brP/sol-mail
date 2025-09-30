@@ -17,10 +17,12 @@
             <li><a href="/page/login">Login</a></li>
             <li><a href="/page/upload">Upload Files</a></li>
             <li><a href="/page/mails">View Your Mails</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>
     </nav>
     <script src="/app/html.js"></script>
     {{ body }}
+    <script src="/app/logout.js"></script>
     <script src="/app/pages/{{ name }}.js" type="module"></script>
     <link rel="stylesheet" href="/app/pages/{{ name }}.css">
 </body>
