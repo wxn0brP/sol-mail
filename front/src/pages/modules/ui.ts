@@ -4,7 +4,7 @@ import { displayFiles } from "./displayFiles";
 async function loadAndDisplayFiles(mailName: string, buttonEl: HTMLButtonElement) {
     buttonEl.textContent = "Loading...";
     buttonEl.disabled = true;
-    const container = qs(`#files-${mailName}`);
+    const container = qs(`files-${mailName}`, 1);
 
     const res = await fetchFiles(mailName);
 
@@ -37,7 +37,7 @@ export function displayMails(mails: string[], mailsContainer: HTMLElement) {
             <li>
                 <h3>${mail}</h3>
                 <button data-mail="${mail}">View Files</button>
-                <div class="files-container" id="files-${mail}"></div>
+                <div class="files-container" data-id="files-${mail}"></div>
             </li>
         `;
     });
@@ -51,7 +51,7 @@ export function displayMails(mails: string[], mailsContainer: HTMLElement) {
             const mailName = buttonEl.dataset.mail;
 
             if (mailName) {
-                const container = qs(`#files-${mailName}`);
+                const container = qs(`files-${mailName}`, 1);
                 if (container.classList.contains("loaded")) {
                     const isHidden = container.style.display === "none";
                     container.style.display = isHidden ? "block" : "none";

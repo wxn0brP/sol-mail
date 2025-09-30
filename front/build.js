@@ -13,7 +13,7 @@ esbuild.build({
     format: "esm",
     platform: "browser",
     target: "es2022",
-    sourcemap: !isDev,
+    sourcemap: true,
     minify: !isDev,
     splitting: true,
     keepNames: true,

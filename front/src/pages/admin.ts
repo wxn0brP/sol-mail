@@ -25,14 +25,14 @@ if (data) {
             return `
                 <li>
                     <h3>${mail.name}</h3>
-                    <button class="show" id="${user.name + "-" + mail.name}">View Files</button>
-                    <div class="files-container" id="files-${user.name}-${mail.name}"></div>
+                    <button class="show" data-id="${user.name + "-" + mail.name}">View Files</button>
+                    <div class="files-container" data-id="files-${user.name}-${mail.name}"></div>
                 </li>
             `
         }).join("");
 
         const r = `
-            <details class="user" id="user-details-${user.name}">
+            <details class="user" data-id="user-details-${user.name}">
                 <summary>${user.name}</summary>
                 <div class="mails-container">
                     <ul>
@@ -50,7 +50,7 @@ if (data) {
                 mailName: `${user.name}/${mail.name}`,
                 files: mail.files,
                 apiPath: "/api/admin/files",
-                container: qs(`#files-${user.name}-${mail.name}`)
+                container: qs(`files-${user.name}-${mail.name}`, 1)
             })
         });
     });
@@ -58,7 +58,7 @@ if (data) {
     app.addEventListener("click", (event) => {
         const target = event.target as HTMLButtonElement;
         if (target.classList.contains("show")) {
-            const container = qs(`#files-${target.id}`);
+            const container = qs(`files-${target.dataset.id}`, 1);
             if (!container) return;
             container.style.display = container.style.display === "block" ? "" : "block";
         }
@@ -76,21 +76,21 @@ event.onmessage = (event) => {
     mail.style.backgroundColor = "#444";
     mail.innerHTML = `
         <h3 style="text-decoration: underline;" title="New mail">${data.name}</h3>
-        <button class="show" id="${data.user + "-" + data.name}">View Files</button>
-        <div class="files-container" id="files-${data.user}-${data.name}"></div>
+        <button class="show" data-id="${data.user + "-" + data.name}">View Files</button>
+        <div class="files-container" data-id="files-${data.user}-${data.name}"></div>
     `;
 
-    let userUl = qs(`#user-details-${data.user} ul`);
+    let userUl = qs(`user-details-${data.user}`, 1).qs("ul");
     if (!userUl) {
         const userContainer = document.createElement("details");
         userContainer.innerHTML = `
             <summary style="text-decoration: underline;" title="New user">${data.user}</summary>
             <div class="mails-container"><ul></ul></div>
         `;
-        userContainer.id = `user-details-${data.user}`;
+        userContainer.dataset.id = `user-details-${data.user}`;
         userContainer.style.backgroundColor = "#333";
         app.appendChild(userContainer);
-        userUl = qs(`#user-details-${data.user} ul`);
+        userUl = qs(`user-details-${data.user}`, 1).qs("ul");
         userContainer.addEventListener("click", () => {
             userContainer.style.backgroundColor = "";
             userContainer.qs("summary").style.textDecoration = "";
@@ -107,6 +107,6 @@ event.onmessage = (event) => {
         mailName: `${data.user}/${data.name}`,
         files: data.files,
         apiPath: "/api/admin/files",
-        container: qs(`#files-${data.user}-${data.name}`)
+        container: qs(`files-${data.user}-${data.name}`, 1)
     });
 }

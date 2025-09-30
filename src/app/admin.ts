@@ -71,16 +71,7 @@ router.get("/files/:user/:mail/:file", async (req, res) => {
     res.sendFile(filePath);
 });
 
-export const sseClients = new Set<FFResponse>();
-export function notifyAdmin(data: string | object) {
-    sseClients.forEach(res => res.sseSend(data));
-}
-
-router.get("/sse", async (req, res) => {
-    res.sseInit();
-    sseClients.add(res);
-    req.on("close", () => sseClients.delete(res));
-});
+export const sse = router.sse("/sse");
 
 export {
     router as adminRouter
