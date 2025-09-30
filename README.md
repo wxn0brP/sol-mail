@@ -19,7 +19,6 @@ Follow these steps to get your own Sol-Mail instance up and running in minutes.
 ### Prerequisites
 
 - You must have **[Bun](https://bun.sh/docs/installation)** installed on your system.
-- A `bash`-compatible shell for running utility scripts.
 
 ### 1. Clone the Repository
 
@@ -65,30 +64,15 @@ This will launch the backend server, which handles the API and serves the web in
 
 To log in, you first need to create a user account.
 
-#### Option A: Use the Helper Script
-
-We've included a simple script for this. **Open a new terminal window** (while the server is still running) and run:
-
 ```bash
-bash create_user.sh
+bun run scripts/create_user.ts
 ```
 
-Follow the prompts to set your username and password.
-
-#### Option B: Use cURL
-
-Alternatively, you can send an HTTP POST request directly to the registration endpoint.
+### 6. Add Admin User
 
 ```bash
-curl -X POST \
-  http://localhost:19851/auth/register \
-  -H 'Content-Type: application/json' \
-  -d '{"name": "your_username", "pass": "your_password"}'
+bun run scripts/add_admin.ts <username>
 ```
-
-After creating the user with either method, you can use these credentials to log into the web interface.
-
----
 
 ## For Developers
 
