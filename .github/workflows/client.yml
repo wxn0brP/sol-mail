@@ -22,9 +22,6 @@ jobs:
       - name: Install Neutralino CLI
         run: npm install -g @neutralinojs/neu
 
-      - name: Verify Neutralino CLI Installation
-        run: neu --version
-
       - name: Build Neutralino App
         run: cd client && neu build --release
 
