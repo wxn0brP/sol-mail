@@ -2,7 +2,7 @@ import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./mails.scss";
 import { displayFiles, initShow } from "./modules/displayFiles";
-import { getMailBody, getMailDateElement } from "./modules/mailUtils";
+import { getMailBody, getMailDateElement, sort } from "./modules/mailUtils";
 import { Mail } from "./modules/types";
 
 checkTokenRefresh();
@@ -20,7 +20,8 @@ async function main() {
         mailsContainer.innerHTML = `<p class="error-message">No mails found.</p>`;
         return;
     }
-    mailsContainer.innerHTML = "<ul>" + res.map(mail => {
+    // const mails = res.map(mail => m)
+    mailsContainer.innerHTML = "<ul>" + sort(res).map(mail => {
         return `
             <li>
                 <h3>${mail.name}</h3>

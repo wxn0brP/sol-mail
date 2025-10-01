@@ -2,7 +2,7 @@ import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./admin.scss";
 import { displayFiles, initShow } from "./modules/displayFiles";
-import { getMailBody, getMailDateElement } from "./modules/mailUtils";
+import { getMailBody, getMailDateElement, sort } from "./modules/mailUtils";
 import { search, searchInput } from "./modules/search";
 import { Mail } from "./modules/types";
 
@@ -18,8 +18,8 @@ interface User {
 const data = await fetch("/api/admin/user-data").then(res => res.json()) as User[];
 
 if (data) {
-    app.innerHTML = data.map(user => {
-        const mails = user.mails.map(mail => {
+    app.innerHTML = data.sort((a, b) => b.name.localeCompare(a.name)).map(user => {
+        const mails = sort(user.mails).map(mail => {
             return `
                 <li>
                     <h3>${mail.name}</h3>
@@ -96,7 +96,7 @@ event.onmessage = (event) => {
         }, { once: true });
     }
 
-    userUl.appendChild(mailEl);
+    userUl.addUp(mailEl);
     mailEl.addEventListener("click", () => {
         mailEl.style.backgroundColor = "";
         mailEl.qs("h3").style.textDecoration = "";

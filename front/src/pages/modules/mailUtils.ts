@@ -1,3 +1,5 @@
+import { Mail } from "./types";
+
 export function getMailDate(id: string) {
     return parseInt(id.split("-")[0], 36);
 }
@@ -38,4 +40,10 @@ export function getMailDateElement(id: string): string {
 export function getMailBody(txt: string) {
     if (!txt) return "";
     return `<pre>${txt}</pre>`;
+}
+
+export function sort(mails: Mail[]) {
+    const map = new Map<string, number>();
+    mails.forEach(m => map.set(m._id, getMailDate(m._id)));
+    return mails.sort((a, b) => map.get(b._id) - map.get(a._id));
 }
