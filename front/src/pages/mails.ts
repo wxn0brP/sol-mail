@@ -7,9 +7,11 @@ import { Mail } from "./modules/types";
 
 checkTokenRefresh();
 const mailsContainer = qs(".mails-container");
+const isPublic = (new URL(window.location.href)).searchParams.get("public") === "true";
+qs("#mail-type").textContent = isPublic ? "Public" : "Your";
 
 async function main() {
-    const res = await fetch("/api/files/mails").then(res => res.json()) as Mail[];
+    const res = await fetch("/api/files/mails" + (isPublic ? "?public=true" : "")).then(res => res.json()) as Mail[];
     // @ts-ignore
     if (res.err) {
         // @ts-ignore
@@ -39,7 +41,8 @@ async function main() {
             name: mail.name,
             files: mail.files,
             apiPath: "/api/files",
-            containerId: `files-${mail._id}`
+            containerId: `files-${mail._id}`,
+            user: isPublic ? "public" : undefined
         });
     });
     initShow(mailsContainer);

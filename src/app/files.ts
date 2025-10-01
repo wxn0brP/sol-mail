@@ -49,6 +49,11 @@ router.customParser("/:mailName", async (req, res) => {
             return res.json({ err: true, msg: "Mail name is required" });
         }
 
+        const userType = await db.master.findOne<any>("users", { _id: user._id });
+        const isAdmin = userType?.admin;
+        if (isAdmin)
+            user.name = "public";
+
         const sanitizedUserName = sanitizeDirName(user.name);
         const sanitizedMailName = sanitizeDirName(mailName);
 
@@ -164,10 +169,10 @@ router.get("/mails", async (req, res) => {
             res.status(401);
             return res.json({ message: "Unauthorized" });
         }
+        if (req.query.public) user.name = "public";
 
         const sanitizedUserName = sanitizeDirName(user.name);
-        const mails = await db.mail.find(sanitizedUserName);
-        return res.json(mails);
+        return await db.mail.find(sanitizedUserName);
     } catch (error) {
         console.error("Error listing mail files:", error);
         res.status(500);
@@ -188,6 +193,7 @@ router.get("/", async (req, res) => {
             res.status(400);
             return res.json({ message: "Mail name and file name are required" });
         }
+        if (req.query.user == "public") user.name = "public";
 
         const sanitizedUserName = sanitizeDirName(user.name);
         const sanitizedMailName = sanitizeDirName(name);
