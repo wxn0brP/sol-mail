@@ -1,11 +1,11 @@
 import { Router } from "@wxn0brp/falcon-frame";
-import busboy from "busboy";
-import path from "path";
-import fs from "fs";
-import { pipeline } from "stream/promises";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
-import { sse } from "./admin";
+import busboy from "busboy";
+import fs, { rmSync } from "fs";
+import path from "path";
+import { pipeline } from "stream/promises";
 import { db } from "../db";
+import { sse } from "./admin";
 
 const router = new Router();
 
@@ -48,6 +48,7 @@ router.customParser("/:mailName", async (req, res) => {
             res.writeHead(400, { "Connection": "close" });
             return res.json({ err: true, msg: "Mail name is required" });
         }
+
         const sanitizedUserName = sanitizeDirName(user.name);
         const sanitizedMailName = sanitizeDirName(mailName);
 
@@ -57,11 +58,10 @@ router.customParser("/:mailName", async (req, res) => {
         }
 
         const additionalFields: { [key: string]: string } = {};
-        const uploads = [];
-        const mail: any = {
-            name: mailName,
-            files: []
-        }
+        const uploads: Promise<void>[] = [];
+        const mail: any = { name: mailName, files: [] };
+
+        let requestAborted = false;
 
         const bb = busboy({
             headers: req.headers,
@@ -69,8 +69,10 @@ router.customParser("/:mailName", async (req, res) => {
             limits: {
                 fileSize: MAX_FILE_SIZE,
                 files: MAX_FILES_COUNT,
-                fields: MAX_FILES_COUNT + 2
-            }
+                fields: MAX_FILES_COUNT + 2,
+                fieldNameSize: 512,
+                fieldSize: 10 * 1048576, // 10MB
+            },
         });
 
         bb.on("field", (fieldname, value) => {
@@ -78,6 +80,9 @@ router.customParser("/:mailName", async (req, res) => {
         });
 
         bb.on("file", (fieldname, file, { filename }) => {
+            if (requestAborted)
+                return file.resume();
+
             const mailDir = path.join("data", "files", sanitizedUserName, sanitizedMailName);
             if (!fs.existsSync(mailDir)) {
                 fs.mkdirSync(mailDir, { recursive: true });
@@ -86,17 +91,31 @@ router.customParser("/:mailName", async (req, res) => {
             const sanitizedFileName = sanitizeFileName(path.basename(filename));
             const saveTo = path.join(mailDir, sanitizedFileName);
             console.log(`Uploading to: ${saveTo}`);
+
             const uploadPromise = pipeline(file, fs.createWriteStream(saveTo));
             uploads.push(uploadPromise);
 
             mail.files.push(filename);
+
+            file.on("limit", () => {
+                console.warn(`File ${filename} exceeded the limit of ${MAX_FILE_SIZE / 1024 / 1024} MB.`);
+                requestAborted = true;
+                rmSync(mailDir, { recursive: true, force: true });
+
+                res.writeHead(413, { "Connection": "close" });
+                res.json({ err: true, msg: `File ${filename} is too large.` });
+                file.resume();
+            });
         });
 
         bb.on("finish", async () => {
+            if (requestAborted) return;
+
             try {
                 await Promise.all(uploads);
                 res.writeHead(200, { "Connection": "close" });
                 res.json({ err: false, msg: "File uploaded successfully" });
+
                 mail.txt = additionalFields.txt;
                 const m = await db.mail.add(sanitizedUserName, mail);
                 sse.sendAll({
@@ -105,23 +124,36 @@ router.customParser("/:mailName", async (req, res) => {
                 });
             } catch (err) {
                 console.error("Pipeline failed.", err);
-                res.writeHead(500, { "Connection": "close" });
-                res.json({ err: true, msg: "An error occurred during file upload." });
+                if (!res._ended) {
+                    res.writeHead(500, { "Connection": "close" });
+                    res.json({ err: true, msg: "An error occurred during file upload." });
+                }
             }
         });
 
         bb.on("error", (err) => {
             console.error("Busboy error:", err);
-            res.writeHead(500, { "Connection": "close" });
-            res.json({ err: true, msg: "An error occurred during file upload." });
+            if (!res._ended) {
+                res.writeHead(500, { "Connection": "close" });
+                res.json({ err: true, msg: "An error occurred during file upload." });
+            }
+        });
+
+        bb.on("filesLimit", () => {
+            console.warn(`Too many files uploaded. Limit is ${MAX_FILES_COUNT}.`);
+            requestAborted = true;
+            res.writeHead(413, { "Connection": "close" });
+            res.json({ err: true, msg: `Too many files uploaded. Limit is ${MAX_FILES_COUNT}.` });
         });
 
         req.pipe(bb);
 
     } catch (error) {
         console.error("Error setting up busboy:", error);
-        res.writeHead(500, { "Connection": "close" });
-        res.json({ err: true, msg: "An error occurred during file upload." });
+        if (!res._ended) {
+            res.writeHead(500, { "Connection": "close" });
+            res.json({ err: true, msg: "An error occurred during file upload." });
+        }
     }
 });
 
