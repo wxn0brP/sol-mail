@@ -81,6 +81,24 @@ input {
     }
 }
 
+textarea {
+    padding: 0.8rem;
+    border: 1px solid #555;
+    background-color: #444;
+    color: var(--txt);
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 2rem;
+
+    &:focus {
+        outline: none;
+        border-color: var(--yellow);
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+}
+
 .message {
     text-align: center;
     margin-top: 1rem;

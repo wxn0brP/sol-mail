@@ -116,7 +116,7 @@ router.customParser("/:mailName", async (req, res) => {
                 res.writeHead(200, { "Connection": "close" });
                 res.json({ err: false, msg: "File uploaded successfully" });
 
-                mail.txt = additionalFields.txt;
+                mail.txt = additionalFields.body;
                 const m = await db.mail.add(sanitizedUserName, mail);
                 sse.sendAll({
                     ...m,

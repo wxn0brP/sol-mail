@@ -5,8 +5,9 @@ import "./upload.scss";
 checkTokenRefresh();
 const uploadForm = qs("form");
 
-const fileInput = qs("#filefield") as HTMLInputElement;
-const mailNameInput = qs("#mailName") as HTMLInputElement;
+const fileInput = qi("#filefield");
+const mailNameInput = qi("#mailName");
+const bodyInput = qi("#body");
 const message = qs("#message");
 
 uploadForm.addEventListener("submit", async (event) => {
@@ -17,9 +18,17 @@ uploadForm.addEventListener("submit", async (event) => {
         message.textContent = "Please enter a mail name";
         return;
     }
+    const body = bodyInput.value.trim();
+
+    if (fileInput.files.length === 0) {
+        const conf = confirm("Are you sure you want to upload an empty file?");
+        if (!conf) return;
+    }
 
     const formData = new FormData();
     formData.append("mailName", mailName);
+    if (body)
+        formData.append("body", body);
 
     for (const file of fileInput.files) {
         formData.append("filefield", file);

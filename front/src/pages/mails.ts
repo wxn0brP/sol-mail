@@ -2,13 +2,14 @@ import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./mails.scss";
 import { displayFiles, initShow } from "./modules/displayFiles";
-import { getMailDateElement } from "./modules/mailDate";
+import { getMailBody, getMailDateElement } from "./modules/mailUtils";
+import { Mail } from "./modules/types";
 
 checkTokenRefresh();
 const mailsContainer = qs(".mails-container");
 
 async function main() {
-    const res = await fetch("/api/files/mails").then(res => res.json()) as { name: string, files: string[], _id: string }[];
+    const res = await fetch("/api/files/mails").then(res => res.json()) as Mail[];
     // @ts-ignore
     if (res.err) {
         // @ts-ignore
@@ -24,6 +25,7 @@ async function main() {
             <li>
                 <h3>${mail.name}</h3>
                 ${getMailDateElement(mail._id)}
+                ${getMailBody(mail.txt)}
                 <button class="show" data-id="${mail._id}">View Files</button>
                 <div class="files-container" data-id="files-${mail._id}"></div>
             </li>

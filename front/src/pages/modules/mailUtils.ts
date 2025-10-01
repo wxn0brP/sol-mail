@@ -34,3 +34,8 @@ export function getMailDateElement(id: string): string {
 
     return `<p title="${fullDate}">${shortDate}</p>`;
 }
+
+export function getMailBody(txt: string) {
+    if (!txt) return "";
+    return `<pre>${txt}</pre>`;
+}
