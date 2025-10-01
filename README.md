@@ -42,7 +42,7 @@ cp .env.example .env
 We've created a single command to handle all the necessary setup steps, from installing dependencies to building the frontend.
 
 ```bash
-bun run setup:bun
+bun run setup
 ```
 
 This command performs the following actions for you:
