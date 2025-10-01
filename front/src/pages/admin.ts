@@ -3,7 +3,7 @@ import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./admin.scss";
 import { displayFiles, initShow } from "./modules/displayFiles";
 import { getMailDateElement } from "./modules/mailDate";
-import "./modules/search";
+import { search, searchInput } from "./modules/search";
 
 checkTokenRefresh();
 const app = qs("#app");
@@ -115,5 +115,7 @@ event.onmessage = (event) => {
     notifications.appendChild(notification);
     notification.addEventListener("click", () => {
         notification.remove();
+        searchInput.v(`user:${data.user} name:${data.name}`);
+        search();
     }, { once: true });
 }

@@ -1,7 +1,6 @@
+export const searchInput = qi("#search");
 
-const searchInput = qi("#search");
-
-searchInput.addEventListener("input", () => {
+export function search() {
     const openUserDetails = new Set<HTMLElement>();
     document.querySelectorAll<HTMLElement>(".user[open]").forEach(userElement => {
         openUserDetails.add(userElement);
@@ -79,4 +78,6 @@ searchInput.addEventListener("input", () => {
             userElement.removeAttribute("open");
         }
     });
-});
+}
+
+searchInput.addEventListener("input", () => search());

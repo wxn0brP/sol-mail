@@ -1,6 +1,6 @@
 
 import { popupSupported } from "./extensions";
-import { getIconForFile } from "./file-utils";
+import { getIconForFile } from "./fileUtils";
 import { openFilePopup } from "./popup";
 
 interface DisplayFilesParams {

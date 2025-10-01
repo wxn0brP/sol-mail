@@ -59,7 +59,6 @@ router.customParser("/:mailName", async (req, res) => {
         const additionalFields: { [key: string]: string } = {};
         const uploads = [];
         const mail: any = {
-            user: user.name,
             name: mailName,
             files: []
         }
@@ -89,7 +88,7 @@ router.customParser("/:mailName", async (req, res) => {
             const uploadPromise = pipeline(file, fs.createWriteStream(saveTo));
             uploads.push(uploadPromise);
 
-            mail.files.push(sanitizedFileName);
+            mail.files.push(filename);
         });
 
         bb.on("finish", async () => {
@@ -98,9 +97,11 @@ router.customParser("/:mailName", async (req, res) => {
                 res.writeHead(200, { "Connection": "close" });
                 res.json({ err: false, msg: "File uploaded successfully" });
                 mail.txt = additionalFields.txt;
-                sse.sendAll(mail);
-                delete mail.user;
-                await db.mail.add(sanitizedUserName, mail);
+                const m = await db.mail.add(sanitizedUserName, mail);
+                sse.sendAll({
+                    ...m,
+                    user: user.name
+                });
             } catch (err) {
                 console.error("Pipeline failed.", err);
                 res.writeHead(500, { "Connection": "close" });
