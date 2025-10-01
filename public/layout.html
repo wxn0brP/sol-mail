@@ -13,6 +13,7 @@
 
 <body>
     <nav>
+        <div id="who"></div>
         <ul>
             <li><a href="/page/login">Login</a></li>
             <li><a href="/page/upload">Upload Files</a></li>
@@ -26,6 +27,10 @@
     <script src="/app/logout.js"></script>
     <script src="/app/pages/{{ name }}.js" type="module"></script>
     <link rel="stylesheet" href="/app/pages/{{ name }}.css">
+    <script type="module">
+        const loginAs = localStorage.getItem("name");
+        if (loginAs) qs("#who").innerHTML = `👤 ${loginAs}`;
+    </script>
 </body>
 
 </html>

@@ -37,6 +37,7 @@ loginForm.on("submit", async (event) => {
         errorMessage.innerHTML = data.msg;
     } else {
         localStorage.setItem("tokenExpiresAt", data.expiresAt);
+        localStorage.setItem("name", data.name);
         setTimeout(() => {
             if (document.cookie.length < 20)
                 document.cookie = `token=${data.token}; expires=${new Date(data.expiresAt).toUTCString()}; path=/`;
