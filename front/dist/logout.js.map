@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/logout.ts"],
+  "sourcesContent": ["(window as any).logout = async function () {\n    const conf = confirm(\"Are you sure you want to logout?\");\n    if (!conf) return;\n    await fetch(\"/auth/logout\", { method: \"POST\" });\n    window.location.href = \"/page/login\";\n}"],
+  "mappings": "AAAC,OAAe,OAAS,gBAAkB,CAC1B,QAAQ,kCAAkC,IAEvD,MAAM,MAAM,eAAgB,CAAE,OAAQ,MAAO,CAAC,EAC9C,OAAO,SAAS,KAAO,cAC3B",
+  "names": []
+}

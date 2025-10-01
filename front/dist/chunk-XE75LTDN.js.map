@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/utils/requireLogin.ts"],
+  "sourcesContent": ["import { cookies } from \"./cookies\";\n\nif (!cookies.token) {\n    window.location.href = `/page/login?next=${window.location.pathname}`;\n}"],
+  "mappings": "wCAEKA,EAAQ,QACT,OAAO,SAAS,KAAO,oBAAoB,OAAO,SAAS,QAAQ",
+  "names": ["cookies"]
+}

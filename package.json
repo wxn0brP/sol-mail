@@ -1,0 +1,29 @@
+{
+  "name": "@wxn0brp/sol-mail",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wxn0brP/sol-mail.git"
+  },
+  "homepage": "https://github.com/wxn0brP/sol-mail",
+  "author": "wxn0brP",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "*",
+    "tsc-alias": "*",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "@types/busboy": "^1.5.4",
+    "@wxn0brp/ac": "^0.0.2",
+    "@wxn0brp/db": "^0.40.0",
+    "@wxn0brp/falcon-frame": "^0.4.0",
+    "busboy": "^1.6.0",
+    "dotenv": "^17.2.3",
+    "jose": "^6.1.0"
+  }
+}
