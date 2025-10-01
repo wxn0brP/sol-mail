@@ -2,6 +2,7 @@ import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./mails.scss";
 import { displayFiles, initShow } from "./modules/displayFiles";
+import { getMailDateElement } from "./modules/mailDate";
 
 checkTokenRefresh();
 const mailsContainer = qs(".mails-container");
@@ -20,6 +21,7 @@ async function main() {
         return `
             <li>
                 <h3>${mail.name}</h3>
+                ${getMailDateElement(mail._id)}
                 <button class="show" data-id="${mail.name}">View Files</button>
                 <div class="files-container" data-id="files-${mail.name}"></div>
             </li>

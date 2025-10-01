@@ -2,6 +2,7 @@ import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./admin.scss";
 import { displayFiles, initShow } from "./modules/displayFiles";
+import { getMailDateElement } from "./modules/mailDate";
 import "./modules/search";
 
 checkTokenRefresh();
@@ -16,6 +17,7 @@ interface User {
 interface Mail {
     name: string;
     files: string[];
+    _id: string;
 }
 
 const data = await fetch("/api/admin/user-data").then(res => res.json()) as User[];
@@ -26,6 +28,7 @@ if (data) {
             return `
                 <li>
                     <h3>${mail.name}</h3>
+                    ${getMailDateElement(mail._id)}
                     <button class="show" data-id="${user.name + "-" + mail.name}">View Files</button>
                     <div class="files-container" data-id="files-${user.name}-${mail.name}"></div>
                 </li>
@@ -53,7 +56,7 @@ if (data) {
                 apiPath: "/api/admin/files",
                 user: user.name,
                 containerId: `files-${user.name}-${mail.name}`
-            })
+            });
         });
     });
 
@@ -65,12 +68,13 @@ if (data) {
 const event = new EventSource("/api/admin/sse");
 
 event.onmessage = (event) => {
-    const data = JSON.parse(event.data) as { user: string, name: string, files: string[] };
+    const data = JSON.parse(event.data) as { user: string, name: string, files: string[], _id: string };
 
     const mail = document.createElement("li");
     mail.style.backgroundColor = "#444";
     mail.innerHTML = `
         <h3 style="text-decoration: underline;" title="New mail">${data.name}</h3>
+        ${getMailDateElement(data._id)}
         <button class="show" data-id="${data.user + "-" + data.name}">View Files</button>
         <div class="files-container" data-id="files-${data.user}-${data.name}"></div>
     `;

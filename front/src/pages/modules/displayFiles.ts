@@ -20,7 +20,6 @@ export function displayFiles({ name, files, apiPath, containerId, user }: Displa
         return;
     }
 
-
     let html = "<ul>";
     files.forEach(file => {
         const urlParams = new URLSearchParams();

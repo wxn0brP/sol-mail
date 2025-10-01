@@ -27,10 +27,13 @@ h1 {
         }
 
         h3 {
-            margin: 0 0 1rem 0;
             font-size: 1.3rem;
             color: var(--txt);
             font-weight: bold;
+        }
+
+        p {
+            text-align: left;
         }
 
         button {
@@ -42,6 +45,7 @@ h1 {
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s;
+            margin-top: 1rem;
 
             &:hover {
                 background-color: #ffc107;
