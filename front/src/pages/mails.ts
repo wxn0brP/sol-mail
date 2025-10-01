@@ -8,8 +8,10 @@ checkTokenRefresh();
 const mailsContainer = qs(".mails-container");
 
 async function main() {
-    const res = await fetch("/api/files/mails").then(res => res.json());
+    const res = await fetch("/api/files/mails").then(res => res.json()) as { name: string, files: string[], _id: string }[];
+    // @ts-ignore
     if (res.err) {
+        // @ts-ignore
         mailsContainer.innerHTML = `<p class="error-message">${res.msg}</p>`;
         return
     }
@@ -22,8 +24,8 @@ async function main() {
             <li>
                 <h3>${mail.name}</h3>
                 ${getMailDateElement(mail._id)}
-                <button class="show" data-id="${mail.name}">View Files</button>
-                <div class="files-container" data-id="files-${mail.name}"></div>
+                <button class="show" data-id="${mail._id}">View Files</button>
+                <div class="files-container" data-id="files-${mail._id}"></div>
             </li>
         `
     }).join("") + "</ul>";
@@ -33,7 +35,7 @@ async function main() {
             name: mail.name,
             files: mail.files,
             apiPath: "/api/files",
-            containerId: `files-${mail.name}`
+            containerId: `files-${mail._id}`
         });
     });
     initShow(mailsContainer);

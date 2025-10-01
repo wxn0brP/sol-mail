@@ -29,8 +29,8 @@ if (data) {
                 <li>
                     <h3>${mail.name}</h3>
                     ${getMailDateElement(mail._id)}
-                    <button class="show" data-id="${user.name + "-" + mail.name}">View Files</button>
-                    <div class="files-container" data-id="files-${user.name}-${mail.name}"></div>
+                    <button class="show" data-id="${mail._id}">View Files</button>
+                    <div class="files-container" data-id="files-${mail._id}"></div>
                 </li>
             `
         }).join("");
@@ -55,7 +55,7 @@ if (data) {
                 files: mail.files,
                 apiPath: "/api/admin/files",
                 user: user.name,
-                containerId: `files-${user.name}-${mail.name}`
+                containerId: `files-${mail._id}`
             });
         });
     });
@@ -75,8 +75,8 @@ event.onmessage = (event) => {
     mail.innerHTML = `
         <h3 style="text-decoration: underline;" title="New mail">${data.name}</h3>
         ${getMailDateElement(data._id)}
-        <button class="show" data-id="${data.user + "-" + data.name}">View Files</button>
-        <div class="files-container" data-id="files-${data.user}-${data.name}"></div>
+        <button class="show" data-id="${data._id}">View Files</button>
+        <div class="files-container" data-id="files-${data._id}"></div>
     `;
 
     let userUl = qs(`user-details-${data.user}`, 1).qs("ul");
@@ -107,8 +107,9 @@ event.onmessage = (event) => {
         files: data.files,
         apiPath: "/api/admin/files",
         user: data.user,
-        containerId: `files-${data.user}-${data.name}`
+        containerId: `files-${data._id}`
     });
+    if (searchInput.value) search();
 
     const notification = document.createElement("li");
     notification.innerHTML = `<b>${data.user}</b> - <b>${data.name}</b>`;

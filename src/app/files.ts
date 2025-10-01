@@ -17,11 +17,11 @@ if (!fs.existsSync("data/files")) {
 }
 
 export function sanitizeDirName(name: string): string {
-    return name.replace(/[^a-zA-Z0-9-_]/g, "_");
+    return name.replace(/[\/\?%*:|"<>^.]/g, "_");
 }
 
 export function sanitizeFileName(name: string): string {
-    return name.replace(/[^a-zA-Z0-9-_.]/g, "_");
+    return name.replace(/[\/\?%*:|"<>^]/g, "_");
 }
 
 let MAX_FILE_SIZE = 0;
@@ -65,6 +65,7 @@ router.customParser("/:mailName", async (req, res) => {
 
         const bb = busboy({
             headers: req.headers,
+            defParamCharset: "utf8",
             limits: {
                 fileSize: MAX_FILE_SIZE,
                 files: MAX_FILES_COUNT,
