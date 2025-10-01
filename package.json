@@ -13,8 +13,7 @@
     "type": "module",
     "scripts": {
         "start": "bun run src/index.ts",
-        "setup": "bun install && cd front && bun install && bun run build.ts && cd ..",
-        "bun": "bun run src/index.ts"
+        "setup": "bun install && cd front && bun install && bun run build.ts && cd .."
     },
     "devDependencies": {
         "@types/bun": "*",

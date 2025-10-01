@@ -55,7 +55,7 @@ This command performs the following actions for you:
 Now, you can start the application server.
 
 ```bash
-bun run bun
+bun start
 ```
 
 This will launch the backend server, which handles the API and serves the web interface. By default, it should be running at `http://localhost:19851`.
