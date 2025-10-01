@@ -30,6 +30,12 @@ function findFirstWorkingHost(hosts, port) {
     });
 }
 
+function isLocalAddress(ip) {
+    if (!isValidIp(ip)) return false;
+    if (ip.startsWith("127.0.0.1")) return false;
+    return ip.startsWith("10.") || ip.startsWith("172.") || ip.startsWith("192.168.");
+}
+
 async function getMyIp() {
     try {
         const stdout = await exec("ipconfig");
@@ -41,9 +47,7 @@ async function getMyIp() {
                 const parts = trimmed.split(":");
                 if (parts.length > 1) {
                     const ip = parts[1].trim();
-                    if (isValidIp(ip)) {
-                        return ip;
-                    }
+                    if (isLocalAddress(ip)) return ip;
                 }
             }
         }
@@ -52,8 +56,7 @@ async function getMyIp() {
         /** @type {string[]} */
         const ips = stdout2.trim().split(" ");
         for (const ip of ips) {
-            if (!isValidIp(ip)) continue;
-            if (ip.startsWith("10.") || ip.startsWith("172.") || ip.startsWith("192.168")) return ip;
+            if (isLocalAddress(ip)) return ip;
         }
 
     } catch (error) {
