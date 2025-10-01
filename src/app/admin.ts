@@ -1,10 +1,10 @@
-import { FFResponse, RouteHandler, Router } from "@wxn0brp/falcon-frame";
-import { User } from "../types/auth";
-import { db } from "../db";
-import { existsSync, readdirSync } from "fs";
-import { sanitizeDirName, sanitizeFileName } from "./files";
-import { join } from "path";
+import { RouteHandler, Router } from "@wxn0brp/falcon-frame";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
+import { existsSync } from "fs";
+import { join } from "path";
+import { db } from "../db";
+import { User } from "../types/auth";
+import { sanitizeDirName, sanitizeFileName } from "./files";
 
 const router = new Router();
 
@@ -26,40 +26,23 @@ router.get("/users", async (req, res) => {
 });
 
 router.get("/user-data", async () => {
-    const data = readdirSync("data/files", { recursive: true, withFileTypes: true });
-
+    const users = await db.mail.getCollections();
     const result = [];
-
-    for (const entry of data) {
-        if (entry.isFile()) {
-            const path = entry.parentPath.replace(/\\/g, "/");
-            const parts = path.split("/");
-
-            const mailName = sanitizeDirName(parts[parts.length - 1]);
-            const userName = sanitizeDirName(parts[parts.length - 2]);
-
-            let user = result.find(u => u.name === userName);
-            if (!user) {
-                user = { name: userName, mails: [] };
-                result.push(user);
-            }
-
-            let mail = user.mails.find(m => m.name === mailName);
-            if (!mail) {
-                mail = { name: mailName, files: [] };
-                user.mails.push(mail);
-            }
-
-            mail.files.push(sanitizeFileName(entry.name));
-        }
+    for (const user of users) {
+        const mails = await db.mail.find(user);
+        result.push({ name: user, mails });
     }
 
     return result;
 });
 
-router.get("/files/:user/:mail/:file", async (req, res) => {
-    const { user, mail, file } = req.params;
-    const filePath = join("data", "files", sanitizeDirName(user), sanitizeDirName(mail), sanitizeFileName(file));
+router.get("/files", async (req, res) => {
+    const { user, name, file } = req.query;
+    if (!user || !name || !file) {
+        res.status(400);
+        return res.json({ message: "User, name and file name are required" });
+    }
+    const filePath = join("data", "files", sanitizeDirName(user), sanitizeDirName(name), sanitizeFileName(file));
 
     if (!existsSync(filePath)) {
         res.status(404);
@@ -75,4 +58,4 @@ export const sse = router.sse("/sse");
 
 export {
     router as adminRouter
-}
+};

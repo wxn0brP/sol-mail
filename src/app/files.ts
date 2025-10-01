@@ -5,6 +5,7 @@ import fs from "fs";
 import { pipeline } from "stream/promises";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
 import { sse } from "./admin";
+import { db } from "../db";
 
 const router = new Router();
 
@@ -57,9 +58,9 @@ router.customParser("/:mailName", async (req, res) => {
 
         const additionalFields: { [key: string]: string } = {};
         const uploads = [];
-        const mail = {
-            user: sanitizedUserName,
-            name: sanitizedMailName,
+        const mail: any = {
+            user: user.name,
+            name: mailName,
             files: []
         }
 
@@ -96,7 +97,10 @@ router.customParser("/:mailName", async (req, res) => {
                 await Promise.all(uploads);
                 res.writeHead(200, { "Connection": "close" });
                 res.json({ err: false, msg: "File uploaded successfully" });
+                mail.txt = additionalFields.txt;
                 sse.sendAll(mail);
+                delete mail.user;
+                await db.mail.add(sanitizedUserName, mail);
             } catch (err) {
                 console.error("Pipeline failed.", err);
                 res.writeHead(500, { "Connection": "close" });
@@ -119,61 +123,7 @@ router.customParser("/:mailName", async (req, res) => {
     }
 });
 
-router.get("/", async (req) => {
-    try {
-        const user = req.user;
-        if (!user) return { status: 401, message: "Unauthorized" };
-
-        const sanitizedUserName = sanitizeDirName(user.name);
-        const userDir = path.join("data", "files", sanitizedUserName);
-
-        if (!fs.existsSync(userDir)) {
-            return { mails: [] };
-        }
-
-        const mailDirs = fs.readdirSync(userDir).filter(item => {
-            const itemPath = path.join(userDir, item);
-            return fs.statSync(itemPath).isDirectory();
-        });
-
-        return { mails: mailDirs };
-    } catch (error) {
-        console.error("Error listing mail directories:", error);
-        return { status: 500, message: "Internal Server Error" };
-    }
-});
-
-router.get("/:mailName", async (req) => {
-    try {
-        const user = req.user;
-        if (!user) return { status: 401, message: "Unauthorized" };
-
-        const mailName = req.params.mailName;
-        if (!mailName) {
-            return { status: 400, message: "Mail name is required" };
-        }
-
-        const sanitizedUserName = sanitizeDirName(user.name);
-        const sanitizedMailName = sanitizeDirName(mailName);
-        const mailDir = path.join("data", "files", sanitizedUserName, sanitizedMailName);
-
-        if (!fs.existsSync(mailDir)) {
-            return { status: 404, message: "Mail directory not found" };
-        }
-
-        const files = fs.readdirSync(mailDir).filter(item => {
-            const itemPath = path.join(mailDir, item);
-            return fs.statSync(itemPath).isFile();
-        });
-
-        return { files };
-    } catch (error) {
-        console.error("Error listing mail files:", error);
-        return { status: 500, message: "Internal Server Error" };
-    }
-});
-
-router.get("/:mailName/:fileName", async (req, res) => {
+router.get("/mails", async (req, res) => {
     try {
         const user = req.user;
         if (!user) {
@@ -181,11 +131,33 @@ router.get("/:mailName/:fileName", async (req, res) => {
             return res.json({ message: "Unauthorized" });
         }
 
-        const { mailName, fileName } = req.params;
+        const sanitizedUserName = sanitizeDirName(user.name);
+        const mails = await db.mail.find(sanitizedUserName);
+        return res.json(mails);
+    } catch (error) {
+        console.error("Error listing mail files:", error);
+        res.status(500);
+        return res.json({ message: "Internal Server Error" });
+    }
+});
+
+router.get("/", async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user) {
+            res.status(401);
+            return res.json({ message: "Unauthorized" });
+        }
+
+        const { name, file } = req.query;
+        if (!name || !file) {
+            res.status(400);
+            return res.json({ message: "Mail name and file name are required" });
+        }
 
         const sanitizedUserName = sanitizeDirName(user.name);
-        const sanitizedMailName = sanitizeDirName(mailName);
-        const sanitizedFileName = sanitizeFileName(fileName);
+        const sanitizedMailName = sanitizeDirName(name);
+        const sanitizedFileName = sanitizeFileName(file);
         const filePath = path.join("data", "files", sanitizedUserName, sanitizedMailName, sanitizedFileName);
 
         if (!fs.existsSync(filePath)) {

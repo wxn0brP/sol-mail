@@ -1,19 +1,44 @@
 import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./mails.scss";
-import { fetchMails } from "./modules/api";
-import { displayMails } from "./modules/ui";
+import { displayFiles, initShow } from "./modules/displayFiles";
 
 checkTokenRefresh();
 const mailsContainer = qs(".mails-container");
 
-try {
-    const res = await fetchMails();
+async function main() {
+    const res = await fetch("/api/files/mails").then(res => res.json());
     if (res.err) {
         mailsContainer.innerHTML = `<p class="error-message">${res.msg}</p>`;
-    } else {
-        displayMails(res.mails, mailsContainer);
+        return
     }
+    if (res.length === 0) {
+        mailsContainer.innerHTML = `<p class="error-message">No mails found.</p>`;
+        return;
+    }
+    mailsContainer.innerHTML = "<ul>" + res.map(mail => {
+        return `
+            <li>
+                <h3>${mail.name}</h3>
+                <button class="show" data-id="${mail.name}">View Files</button>
+                <div class="files-container" data-id="files-${mail.name}"></div>
+            </li>
+        `
+    }).join("") + "</ul>";
+
+    res.forEach(mail => {
+        displayFiles({
+            name: mail.name,
+            files: mail.files,
+            apiPath: "/api/files",
+            containerId: `files-${mail.name}`
+        });
+    });
+    initShow(mailsContainer);
+}
+
+try {
+    main();
 } catch (error) {
     console.error("Failed to load mails:", error);
     mailsContainer.innerHTML = `<p class="error-message">Could not connect to the server.</p>`;

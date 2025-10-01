@@ -1,7 +1,7 @@
 import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./admin.scss";
-import { displayFiles } from "./modules/displayFiles";
+import { displayFiles, initShow } from "./modules/displayFiles";
 import "./modules/search";
 
 checkTokenRefresh();
@@ -48,22 +48,16 @@ if (data) {
     data.forEach(user => {
         user.mails.forEach(mail => {
             displayFiles({
-                mailName: `${user.name}/${mail.name}`,
+                name: mail.name,
                 files: mail.files,
                 apiPath: "/api/admin/files",
-                container: qs(`files-${user.name}-${mail.name}`, 1)
+                user: user.name,
+                containerId: `files-${user.name}-${mail.name}`
             })
         });
     });
 
-    app.addEventListener("click", (event) => {
-        const target = event.target as HTMLButtonElement;
-        if (target.classList.contains("show")) {
-            const container = qs(`files-${target.dataset.id}`, 1);
-            if (!container) return;
-            container.style.display = container.style.display === "block" ? "" : "block";
-        }
-    });
+    initShow(app);
 } else {
     app.innerHTML = `<p class="error-message">Could not connect to the server.</p>`;
 }
@@ -105,10 +99,11 @@ event.onmessage = (event) => {
     }, { once: true });
 
     displayFiles({
-        mailName: `${data.user}/${data.name}`,
+        name: data.name,
         files: data.files,
         apiPath: "/api/admin/files",
-        container: qs(`files-${data.user}-${data.name}`, 1)
+        user: data.user,
+        containerId: `files-${data.user}-${data.name}`
     });
 
     const notification = document.createElement("li");
