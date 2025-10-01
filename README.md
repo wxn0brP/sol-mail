@@ -10,8 +10,6 @@ Sol-Mail is a self-hosted file and message submission portal. It provides a simp
 - **Secure**: Uses modern, token-based authentication for user access.
 - **Lightweight**: Built with Bun, ensuring fast performance and a minimal footprint.
 
----
-
 ## 🚀 Getting Started
 
 Follow these steps to get your own Sol-Mail instance up and running in minutes.
