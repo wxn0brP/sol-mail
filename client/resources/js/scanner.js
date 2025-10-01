@@ -49,11 +49,11 @@ async function getMyIp() {
         }
 
         const stdout2 = await exec("ip addr show");
+        /** @type {string[]} */
         const ips = stdout2.trim().split(" ");
         for (const ip of ips) {
-            if (isValidIp(ip) && !ip.startsWith("127.0.0.1")) {
-                return ip;
-            }
+            if (!isValidIp(ip)) continue;
+            if (ip.startsWith("10.") || ip.startsWith("172.") || ip.startsWith("192.168")) return ip;
         }
 
     } catch (error) {
