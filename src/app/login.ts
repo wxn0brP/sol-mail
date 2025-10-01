@@ -39,7 +39,7 @@ export const loginHandler: RouteHandler = async (req, res) => {
         );
         await db.master.add("token", { _id: token, name: user.name, exp: exp.getTime() });
 
-        return { err: false, msg: "Login successful", expiresAt: exp.getTime() };
+        return { err: false, msg: "Login successful", expiresAt: exp.getTime(), token };
     } catch (error) {
         console.error(error);
         res.status(500);
