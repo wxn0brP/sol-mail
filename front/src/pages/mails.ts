@@ -16,11 +16,12 @@ async function main() {
         mailsContainer.innerHTML = `<p class="error-message">${res.msg}</p>`;
         return
     }
+
     if (res.length === 0) {
         mailsContainer.innerHTML = `<p class="error-message">No mails found.</p>`;
         return;
     }
-    // const mails = res.map(mail => m)
+
     mailsContainer.innerHTML = "<ul>" + sort(res).map(mail => {
         return `
             <li>

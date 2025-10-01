@@ -6,11 +6,7 @@ if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined");
 }
 
-const app = new FalconFrame({
-    loggerOpts: {
-        // logLevel: "DEBUG"
-    }
-});
+const app = new FalconFrame();
 
 app.get("/server.find", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
