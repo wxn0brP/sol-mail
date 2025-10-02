@@ -7,6 +7,7 @@ esbuild.build({
         "src/html.ts",
         "src/index.ts",
         "src/logout.ts",
+        "src/as.ts",
         "src/pages/*.ts",
     ],
     outdir: "dist",
