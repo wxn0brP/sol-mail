@@ -1,7 +1,7 @@
 h1 {
     text-align: center;
     margin-bottom: 1rem;
-    color: var(--yellow);
+    color: var(--accent);
 }
 
 .mails-container {
@@ -19,11 +19,12 @@ h1 {
         border-radius: 8px;
         padding: 1.2rem;
         margin-bottom: 1rem;
-        transition: background-color 0.3s, border-color 0.3s;
+        transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 
         &:hover {
             background-color: #3a3a3a;
             border-color: #666;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         h3 {
@@ -37,8 +38,8 @@ h1 {
         }
 
         button {
-            background-color: var(--yellow);
-            color: #1a1a1a;
+            background-color: var(--accent);
+            color: white;
             border: none;
             padding: 0.5rem 1rem;
             border-radius: 4px;
@@ -48,7 +49,7 @@ h1 {
             margin-top: 1rem;
 
             &:hover {
-                background-color: #ffc107;
+                background-color: var(--accent2);
             }
         }
     }
@@ -88,7 +89,7 @@ p {
 
             &:hover {
                 background-color: #444;
-                color: var(--yellow);
+                color: var(--accent);
             }
         }
     }
@@ -114,7 +115,7 @@ p {
         border-radius: 8px;
         overflow: auto;
         position: relative;
-        border: 1px solid var(--yellow);
+        border: 1px solid var(--accent);
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
         .popup-header {
@@ -128,7 +129,7 @@ p {
             h3 {
                 margin: 0;
                 font-size: 1.4rem;
-                color: var(--yellow);
+                color: var(--accent);
                 margin-right: 1rem;
             }
 
@@ -141,7 +142,7 @@ p {
                 transition: color 0.3s;
 
                 &:hover {
-                    color: var(--yellow);
+                    color: var(--accent);
                 }
             }
         }
@@ -183,7 +184,7 @@ p {
         }
 
         a {
-            color: var(--yellow);
+            color: var(--accent);
             text-decoration: none;
 
             &:hover {
