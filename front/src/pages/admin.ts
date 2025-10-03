@@ -61,7 +61,7 @@ if (data) {
         if (searchInput.value) search();
     }, 10);
 } else {
-    app.innerHTML = `<p class="error-message">Could not connect to the server.</p>`;
+    app.innerHTML = `<p class="error-message">${t("Could not connect to the server")}.</p>`;
 }
 
 const event = new EventSource("/api/admin/sse");

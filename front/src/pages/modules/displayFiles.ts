@@ -16,7 +16,7 @@ export function displayFiles({ name, files, apiPath, containerId, user }: Displa
     if (!container) return console.error(`Container ${containerId} not found`);
 
     if (!files || files.length === 0) {
-        container.innerHTML = "<p>No files in this mail.</p>";
+        container.innerHTML = `<p>${t("No files in this mail")}.</p>`;
         return;
     }
 

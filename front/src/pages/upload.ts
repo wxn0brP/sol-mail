@@ -15,13 +15,13 @@ uploadForm.addEventListener("submit", async (event) => {
 
     const mailName = mailNameInput.value.trim();
     if (!mailName) {
-        message.textContent = "Please enter a mail name";
+        message.textContent = t("Please enter a mail name");
         return;
     }
     const body = bodyInput.value.trim();
 
     if (fileInput.files.length === 0) {
-        const conf = confirm("Are you sure you want to upload an empty file?");
+        const conf = confirm(t("Are you sure you want to upload an empty file") + "?");
         if (!conf) return;
     }
 

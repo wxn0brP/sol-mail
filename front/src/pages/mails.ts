@@ -15,12 +15,12 @@ async function main() {
     // @ts-ignore
     if (res.err) {
         // @ts-ignore
-        mailsContainer.innerHTML = `<p class="error-message">${res.msg}</p>`;
+        mailsContainer.innerHTML = `<p class="error-message">${t(res.msg)}</p>`;
         return
     }
 
     if (res.length === 0) {
-        mailsContainer.innerHTML = `<p class="error-message">No mails found.</p>`;
+        mailsContainer.innerHTML = `<p class="error-message">${t("No mails found")}.</p>`;
         return;
     }
 
@@ -30,7 +30,7 @@ async function main() {
                 <h3>${mail.name}</h3>
                 ${getMailDateElement(mail._id)}
                 ${getMailBody(mail.txt)}
-                <button class="show" data-id="${mail._id}">View Files</button>
+                <button class="show" data-id="${mail._id}">${t("View Files")}</button>
                 <div class="files-container" data-id="files-${mail._id}"></div>
             </li>
         `
@@ -52,5 +52,5 @@ try {
     main();
 } catch (error) {
     console.error("Failed to load mails:", error);
-    mailsContainer.innerHTML = `<p class="error-message">Could not connect to the server.</p>`;
+    mailsContainer.innerHTML = `<p class="error-message">${t("Could not connect to the server")}.</p>`;
 }

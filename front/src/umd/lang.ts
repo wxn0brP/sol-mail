@@ -10,11 +10,11 @@ let loadedLang = localStorage.getItem("lang") || navigator.language?.split("-")?
 let translations: Record<string, string> = {};
 let titleString = qs("title").innerHTML.split("|")[1].trim();
 
-export function setTranslations(t: Record<string, string>) {
+function setTranslations(t: Record<string, string>) {
     translations = t;
 }
 
-export function t(key: string): string {
+function t(key: string): string {
     return translations[key] || key;
 }
 
@@ -33,6 +33,10 @@ async function setLang(lang: string) {
     qs("title").textContent = "Sol Mail | " + t(titleString);
 }
 
-await loadTranslations(loadedLang);
 initTranslationsTags();
-setLang(loadedLang);
+loadTranslations(loadedLang).then(() => {
+    setLang(loadedLang);
+});
+
+(window as any).setLang = setLang;
+(window as any).t = t;

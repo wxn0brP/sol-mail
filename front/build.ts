@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV === "development" || process.argv.includes("-
 
 await esbuild.build({
     entryPoints: [
-        "src/*.ts",
+        "src/index.ts",
         "src/pages/*.ts",
     ],
     outdir: "dist",
@@ -34,3 +34,21 @@ await esbuild.build({
 const copy = (file: string) => copyFileSync("node_modules/@wxn0brp/flanker-ui/dist/" + file, "dist/" + file);
 copy("html.js");
 copy("html.js.map");
+
+
+await esbuild.build({
+    entryPoints: [
+        "src/umd/*.ts"
+    ],
+    outdir: "dist",
+    bundle: true,
+    format: "esm",
+    platform: "browser",
+    target: "es2022",
+    sourcemap: true,
+    minify: !isDev,
+    splitting: false,
+    keepNames: true,
+    loader: {},
+    logLevel: "info",
+}).catch(() => process.exit(1));

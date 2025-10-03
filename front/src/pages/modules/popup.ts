@@ -34,7 +34,7 @@ export async function openFilePopup(url: string, filename: string) {
                 <h3>${filename}</h3>
                 <button class="close-popup">&times;</button>
             </div>
-            <div class="file-preview-container">Loading preview...</div>
+            <div class="file-preview-container">${t("Loading preview")}...</div>
         </div>
     `;
 
@@ -70,7 +70,7 @@ export async function openFilePopup(url: string, filename: string) {
             hljs.highlightElement(code);
         } catch (e) {
             console.error(e);
-            previewContainer.innerHTML = `<p>Could not load file preview.</p>`;
+            previewContainer.innerHTML = `<p>${t("Could not load file preview")}.</p>`;
         }
     } else if (video.includes(extension)) {
         previewContainer.innerHTML = `<video src="${url}" controls></video>`;
