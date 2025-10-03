@@ -11,3 +11,5 @@ if (loginAs) {
     });
     who.html(t(revealedText));
 }
+
+qs("nav p").on("click", () => qs("nav ul").clT("show"));

@@ -33,6 +33,7 @@ nav {
         align-items: center;
         padding: 0;
         margin: 0;
+        flex-wrap: wrap;
 
         li {
             margin: 0 15px;
@@ -64,6 +65,71 @@ nav {
 
         span {
             cursor: pointer;
+        }
+    }
+
+    p {
+        display: none;
+        position: absolute;
+        top: 2px;
+        right: 20px;
+        cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        p {
+            display: block;
+        }
+
+        ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            flex-direction: column;
+            padding: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            &.show {
+                display: flex;
+            }
+
+            li {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+
+                a {
+                    display: block;
+                    padding: 10px;
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        div {
+            right: auto;
+            left: 10px;
+            z-index: 10;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    nav {
+        padding: 0.8rem 0;
+
+        ul {
+            li {
+                a {
+                    font-size: 0.9rem;
+                    padding: 8px;
+                }
+            }
         }
     }
 }
