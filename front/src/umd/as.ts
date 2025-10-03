@@ -6,8 +6,8 @@ if (loginAs) {
     who.addEventListener("click", async () => {
         revealed = !revealed;
         await who.fadeOutP(200);
-        who.html(revealed ? loginAs : revealedText);
+        who.html(revealed ? loginAs : t(revealedText));
         who.fadeIn(200, "flex");
     });
-    who.html(revealedText);
+    who.html(t(revealedText));
 }
