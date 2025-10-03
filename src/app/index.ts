@@ -50,8 +50,11 @@ router.get("/page/:name", (req, res, next) => {
 
     if (acceptLang !== "en") {
         const path = "public/lang/" + acceptLang + ".json";
-        if (existsSync(path))
-            langData = JSON.parse(readFileSync(path, "utf-8"));
+        if (existsSync(path)) {
+            try {
+                langData = JSON.parse(readFileSync(path, "utf-8"));
+            } catch { }
+        }
     }
 
     const main = renderHTML(`public/${name}.html`, {});
