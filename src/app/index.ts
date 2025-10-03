@@ -43,24 +43,30 @@ router.get("/page/:name", (req, res, next) => {
 
     let acceptLang = "en";
     let langData = {};
-    if (req.headers["accept-language"]) {
-        acceptLang = req.headers["accept-language"].split(",")[0].split(";")[0].split("-")[0];
-    }
+
+    let userLang = req.cookies.lang || req.headers["accept-language"];
+    if (userLang)
+        acceptLang = userLang.split(",")[0].split(";")[0].split("-")[0];
+
     if (acceptLang !== "en") {
         const path = "public/lang/" + acceptLang + ".json";
         if (existsSync(path))
             langData = JSON.parse(readFileSync(path, "utf-8"));
     }
 
-    let main = renderHTML(`public/${name}.html`, {});
-    for (const key in langData) {
-        main = main.replaceAll(`>${key}</`, `>${langData[key]}</`);
-    }
-    res.render("public/layout", {
+    const main = renderHTML(`public/${name}.html`, {});
+    let html = renderHTML("public/layout.html", {
         title: meta.title,
         body: main,
-        name,
+        name
     });
+
+    for (const key in langData) {
+        html = html.replaceAll(`>${key}</`, `>${langData[key]}</`);
+        html = html.replaceAll(`translate-placeholder="${key}"`, `placeholder="${langData[key]}" translate-placeholder="${key}"`);
+    }
+    res.ct("text/html");
+    res.end(html);
 });
 
 export {
