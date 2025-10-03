@@ -1,17 +1,17 @@
-<h1 translate>File Upload</h1>
+<h1 translate="File Upload">File Upload</h1>
 <form>
     <div>
-        <label for="mailName"><span translate>Subject</span>:</label>
-        <input type="text" name="mailName" id="mailName" placeholder="Enter mail name" required>
+        <label for="mailName"><span translate="Subject">Subject</span>:</label>
+        <input type="text" name="mailName" id="mailName" translate-placeholder="Enter mail name" required>
     </div>
     <div>
-        <label for="body"><span translate>Content</span>:</label>
-        <textarea name="body" id="body" placeholder="Enter mail content"></textarea>
+        <label for="body"><span translate="Content">Content</span>:</label>
+        <textarea name="body" id="body" translate-placeholder="Enter mail content"></textarea>
     </div>
     <div>
-        <label for="filefield"><span translate="">Files</span>:</label>
+        <label for="filefield"><span translate="Files">Files</span>:</label>
         <input type="file" name="filefield" id="filefield" multiple>
     </div>
-    <button type="submit" translate>Send Mail</button>
+    <button type="submit" translate="Send Mail">Send Mail</button>
 </form>
 <p id="message" class="message"></p>

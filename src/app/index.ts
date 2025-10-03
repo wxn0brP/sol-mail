@@ -2,6 +2,8 @@ import { renderHTML, Router } from "@wxn0brp/falcon-frame";
 import { filesRouter } from "./files";
 import { authRouter, authMiddleware } from "./auth";
 import { adminRouter } from "./admin";
+import { existsSync, readFileSync } from "fs";
+import { title } from "process";
 
 const router = new Router();
 
@@ -39,11 +41,26 @@ router.get("/page/:name", (req, res, next) => {
     const meta = pageMeta[name];
     if (!meta) return next();
 
+    let acceptLang = "en";
+    let langData = {};
+    if (req.headers["accept-language"]) {
+        acceptLang = req.headers["accept-language"].split(",")[0].split(";")[0].split("-")[0];
+    }
+    if (acceptLang !== "en") {
+        const path = "public/lang/" + acceptLang + ".json";
+        if (existsSync(path))
+            langData = JSON.parse(readFileSync(path, "utf-8"));
+    }
+
+    let main = renderHTML(`public/${name}.html`, {});
+    for (const key in langData) {
+        main = main.replaceAll(`>${key}</`, `>${langData[key]}</`);
+    }
     res.render("public/layout", {
         title: meta.title,
-        body: renderHTML(`public/${name}.html`, {}),
+        body: main,
         name,
-    })
+    });
 });
 
 export {

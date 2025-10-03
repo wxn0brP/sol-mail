@@ -1,11 +1,3 @@
-function initTranslationsTags() {
-    document.querySelectorAll("[translate]").forEach(el => {
-        const key = el.getAttribute("translate");
-        if (!key)
-            el.setAttribute("translate", el.innerHTML);
-    });
-}
-
 let loadedLang = localStorage.getItem("lang") || navigator.language?.split("-")?.[0] || "en";
 let translations: Record<string, string> = {};
 let titleString = qs("title").innerHTML.split("|")[1].trim();
@@ -30,10 +22,12 @@ async function setLang(lang: string) {
     document.querySelectorAll("[translate]").forEach(el => {
         el.innerHTML = t(el.getAttribute("translate") || "");
     });
+    document.querySelectorAll("[translate-placeholder]").forEach(el => {
+        el.setAttribute("placeholder", t(el.getAttribute("translate-placeholder") || ""));
+    });
     qs("title").textContent = "Sol Mail | " + t(titleString);
 }
 
-initTranslationsTags();
 loadTranslations(loadedLang).then(() => {
     setLang(loadedLang);
 });
