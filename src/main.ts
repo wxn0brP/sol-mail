@@ -15,6 +15,9 @@ app.get("/server.find", (req, res) => {
 app.get("/", (_, res) => res.redirect("/page/upload"));
 app.use("/", masterRouter);
 
-app.get("/*", () => ({ status: 404, message: "Not Found" }));
+app.get("/*", (req, res) => {
+    res.status(404);
+    return { status: 404, message: "Not Found" }
+});
 
 app.listen(+process.env.PORT || 19851, true);
