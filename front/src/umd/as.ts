@@ -1,7 +1,7 @@
 const loginAs = localStorage.getItem("name");
 if (loginAs) {
-    const revealedText = "Click to reveal";
     const who = qs("#who");
+    let revealedText = who.getAttribute("translate");
     let revealed = false;
     who.addEventListener("click", async () => {
         revealed = !revealed;
