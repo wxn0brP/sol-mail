@@ -61,7 +61,8 @@ router.get("/page/:name", (req, res, next) => {
         name
     });
 
-    for (const key in langData) {
+    const keys = Object.keys(langData).sort((a, b) => a.length - b.length);
+    for (const key of keys) {
         html = html.replaceAll(`>${key}</`, `>${langData[key]}</`);
         html = html.replaceAll(`translate-placeholder="${key}"`, `placeholder="${langData[key]}" translate-placeholder="${key}"`);
     }
