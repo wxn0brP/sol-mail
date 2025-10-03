@@ -5,9 +5,7 @@ const isDev = process.env.NODE_ENV === "development" || process.argv.includes("-
 
 await esbuild.build({
     entryPoints: [
-        "src/index.ts",
-        "src/logout.ts",
-        "src/as.ts",
+        "src/*.ts",
         "src/pages/*.ts",
     ],
     outdir: "dist",

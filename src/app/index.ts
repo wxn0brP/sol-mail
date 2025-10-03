@@ -15,6 +15,7 @@ router.use("/auth", authRouter);
 
 const app = new Router();
 app.static("/", "public/assets");
+app.static("/lang", "public/lang");
 app.static("/", "front/dist");
 router.use("/app", app);
 

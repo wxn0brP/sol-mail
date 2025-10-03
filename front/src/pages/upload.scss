@@ -30,9 +30,6 @@ form {
 }
 
 label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
     font-weight: bold;
     color: #e0e0e0;
     font-size: 0.9rem;
@@ -88,7 +85,7 @@ input[type="file"] {
     }
 }
 
-input[type="submit"] {
+button {
     padding: 1rem;
     background: linear-gradient(45deg, var(--accent), var(--accent2));
     color: white;
