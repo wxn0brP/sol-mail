@@ -1,17 +1,13 @@
 <h1 translate="Login">Login</h1>
 <form>
     <div>
-        <label>
-            <span translate="Name">Name</span>:
-            <input type="text" name="name" required>
-        </label>
+        <label for="name"><span translate="Name"></span>:</label>
+        <input type="text" id="name" name="name" required>
     </div>
     <div>
-        <label>
-            <span translate="Password">Password</span>:
-            <input type="password" name="pass" required>
-        </label>
+        <label for="pass"><span translate="Password"></span>:</label>
+        <input type="password" id="pass" name="pass" required>
     </div>
-    <button type="submit" translate="Login">Login</button>
+    <button type="submit" translate="Login"></button>
 </form>
 <p id="error-message" class="error-message"></p>

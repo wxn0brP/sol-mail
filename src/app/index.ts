@@ -1,9 +1,8 @@
-import { renderHTML, Router } from "@wxn0brp/falcon-frame";
-import { filesRouter } from "./files";
-import { authRouter, authMiddleware } from "./auth";
+import { Router } from "@wxn0brp/falcon-frame";
+import { createLangRouter } from "@wxn0brp/falcon-frame-lang";
 import { adminRouter } from "./admin";
-import { existsSync, readFileSync } from "fs";
-import { title } from "process";
+import { authMiddleware, authRouter } from "./auth";
+import { filesRouter } from "./files";
 
 const router = new Router();
 
@@ -21,57 +20,17 @@ app.static("/lang", "public/lang");
 app.static("/", "front/dist");
 router.use("/app", app);
 
-const pageMeta = {
-    login: {
-        title: "Login"
+router.get("/page/:name", createLangRouter({
+    meta: {
+        login: { title: "Login" },
+        mails: { title: "Mails" },
+        upload: { title: "Upload Files" },
+        admin: { title: "Admin" }
     },
-    mails: {
-        title: "Mails"
-    },
-    upload: {
-        title: "Upload Files"
-    },
-    admin: {
-        title: "Admin"
-    }
-}
-
-router.get("/page/:name", (req, res, next) => {
-    const name = req.params.name;
-    const meta = pageMeta[name];
-    if (!meta) return next();
-
-    let acceptLang = "en";
-    let langData = {};
-
-    let userLang = req.cookies.lang || req.headers["accept-language"];
-    if (userLang)
-        acceptLang = userLang.split(",")[0].split(";")[0].split("-")[0];
-
-    if (acceptLang !== "en") {
-        const path = "public/lang/" + acceptLang + ".json";
-        if (existsSync(path)) {
-            try {
-                langData = JSON.parse(readFileSync(path, "utf-8"));
-            } catch { }
-        }
-    }
-
-    const main = renderHTML(`public/${name}.html`, {});
-    let html = renderHTML("public/layout.html", {
-        title: meta.title,
-        body: main,
-        name
-    });
-
-    const keys = Object.keys(langData).sort((a, b) => a.length - b.length);
-    for (const key of keys) {
-        html = html.replaceAll(`>${key}</`, `>${langData[key]}</`);
-        html = html.replaceAll(`translate-placeholder="${key}"`, `placeholder="${langData[key]}" translate-placeholder="${key}"`);
-    }
-    res.ct("text/html");
-    res.end(html);
-});
+    dir: "public",
+    langDir: "public/lang",
+    layout: "public/layout.html",
+}));
 
 export {
     router as masterRouter
