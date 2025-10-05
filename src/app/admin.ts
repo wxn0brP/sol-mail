@@ -36,11 +36,12 @@ router.get("/user-data", async () => {
     return result;
 });
 
-router.get("/files", async (req, res) => {
-    const { user, name, file } = req.query;
-    if (!user || !name || !file) {
+router.get("/files/:file", async (req, res) => {
+    const { user, name } = req.query;
+    const { file } = req.params;
+    if (!user || !name) {
         res.status(400);
-        return res.json({ message: "User, name and file name are required" });
+        return res.json({ message: "User and name name are required" });
     }
     const filePath = join("data", "files", sanitizeDirName(user), sanitizeDirName(name), sanitizeFileName(file));
 

@@ -24,10 +24,9 @@ export function displayFiles({ name, files, apiPath, containerId, user }: Displa
     files.forEach(file => {
         const urlParams = new URLSearchParams();
         urlParams.set("name", name);
-        urlParams.set("file", file);
         if (user) urlParams.set("user", user);
 
-        const fileUrl = `${apiPath}?${urlParams.toString()}`;
+        const fileUrl = `${apiPath}/${file}?${urlParams.toString()}`;
         const icon = getIconForFile(file);
         html += `
             <li>

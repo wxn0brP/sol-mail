@@ -180,7 +180,7 @@ router.get("/mails", async (req, res) => {
     }
 });
 
-router.get("/", async (req, res) => {
+router.get("/files/:file", async (req, res) => {
     try {
         const user = req.user;
         if (!user) {
@@ -188,10 +188,11 @@ router.get("/", async (req, res) => {
             return res.json({ message: "Unauthorized" });
         }
 
-        const { name, file } = req.query;
-        if (!name || !file) {
+        const { file } = req.params;
+        const { name } = req.query;
+        if (!name) {
             res.status(400);
-            return res.json({ message: "Mail name and file name are required" });
+            return res.json({ message: "Mail name are required" });
         }
         if (req.query.user == "public") user.name = "public";
 

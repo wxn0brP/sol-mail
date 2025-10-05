@@ -40,7 +40,7 @@ async function main() {
         displayFiles({
             name: mail.name,
             files: mail.files,
-            apiPath: "/api/files",
+            apiPath: "/api/files/files",
             containerId: `files-${mail._id}`,
             user: isPublic ? "public" : undefined
         });
