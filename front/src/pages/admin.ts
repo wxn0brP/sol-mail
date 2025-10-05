@@ -25,7 +25,7 @@ if (data) {
                     <h3>${mail.name}</h3>
                     ${getMailDateElement(mail._id)}
                     ${getMailBody(mail.txt)}
-                    <button class="show" data-id="${mail._id}">${("View Files")}</button>
+                    <button class="show" data-id="${mail._id}">${t("View Files")}</button>
                     <div class="files-container" data-id="files-${mail._id}"></div>
                 </li>
             `
@@ -75,7 +75,7 @@ event.onmessage = (event) => {
         <h3 style="text-decoration: underline;" title="New mail">${mail.name}</h3>
         ${getMailDateElement(mail._id)}
         ${getMailBody(mail.txt)}
-        <button class="show" data-id="${mail._id}">${("View Files")}</button>
+        <button class="show" data-id="${mail._id}">${t("View Files")}</button>
         <div class="files-container" data-id="files-${mail._id}"></div>
     `;
 
