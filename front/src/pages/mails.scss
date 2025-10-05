@@ -27,6 +27,13 @@ h1 {
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
+        pre {
+            white-space: pre-wrap;
+            word-break: normal;
+            overflow-wrap: break-word;
+            margin-top: 5px;
+        }
+
         h3 {
             font-size: 1.3rem;
             color: var(--txt);
