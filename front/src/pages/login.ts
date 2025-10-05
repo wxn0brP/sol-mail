@@ -1,4 +1,3 @@
-import { cookies } from "../utils/cookies";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./login.scss";
 
@@ -12,13 +11,8 @@ function next() {
     window.location.href = window.location.origin + ("/" + next).replace("//", "/");
 }
 
-if (cookies.token) {
-    const conf = confirm("You are already logged in. Do you want to stay logged in?");
-    if (conf) next();
-} else {
-    qs("nav").style.opacity = "0";
-    qs("nav ul").style.pointerEvents = "none";
-}
+qs("nav").style.opacity = "0";
+qs("nav ul").style.pointerEvents = "none";
 
 loginForm.on("submit", async (event) => {
     event.preventDefault();
