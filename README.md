@@ -1,4 +1,4 @@
-# Sol-Mail
+# Sol Mail
 
 Sol-Mail is a self-hosted file and message submission portal. It provides a simple and secure way for users to send files and messages to a central administrator, making it an ideal solution for scenarios like collecting assignments, receiving project files, or any situation where secure, one-way submission is needed.
 
@@ -9,6 +9,11 @@ Sol-Mail is a self-hosted file and message submission portal. It provides a simp
 - **Centralized Reception**: All submissions are sent to a single admin account for easy management.
 - **Secure**: Uses modern, token-based authentication for user access.
 - **Lightweight**: Built with Bun, ensuring fast performance and a minimal footprint.
+
+## Client
+
+- [Sol-Mail Client](https://github.com/wxn0brP/sol-mail-client)
+- [ScreenShots](https://github.com/wxn0brP/sol-mail-client/blob/master/screenshots.md)
 
 ## 🚀 Getting Started
 
