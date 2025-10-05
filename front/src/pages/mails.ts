@@ -9,6 +9,7 @@ checkTokenRefresh();
 const mailsContainer = qs(".mails-container");
 const isPublic = (new URL(window.location.href)).searchParams.get("public") === "true";
 qs("#mail-type").textContent = isPublic ? t("Public") : t("Your");
+qs("#mail-type").setAttribute("translate", isPublic ? "Public" : "Your");
 
 async function main() {
     const res = await fetch("/api/files/mails" + (isPublic ? "?public=true" : "")).then(res => res.json()) as Mail[];
