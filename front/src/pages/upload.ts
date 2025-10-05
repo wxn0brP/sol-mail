@@ -1,3 +1,4 @@
+import { confirm } from "../utils/popup";
 import "../utils/requireLogin";
 import { checkTokenRefresh } from "../utils/tokenRefresh";
 import "./upload.scss";
@@ -21,7 +22,7 @@ uploadForm.addEventListener("submit", async (event) => {
     const body = bodyInput.value.trim();
 
     if (fileInput.files.length === 0) {
-        const conf = confirm(t("Are you sure you want to upload an empty file") + "?");
+        const conf = await confirm(t("Are you sure you want to upload an empty file") + "?");
         if (!conf) return;
     }
 

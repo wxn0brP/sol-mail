@@ -20,8 +20,10 @@
             <li><a href="/page/mails" translate="View Your Mails"></a></li>
             <li><a href="/page/mails?public=true" translate="View Public Mails"></a></li>
             <li><a href="#" onclick="logout()" translate="Logout"></a></li>
+            <li><a href="#" id="change-lang">🌐</a></li>
         </ul>
     </nav>
+    <div id="popup-container"></div>
     <script src="/app/html.js"></script>
     {{ body }}
     <script src="/app/lang.js"></script>
@@ -29,6 +31,7 @@
     <script src="/app/pages/{{ name }}.js" type="module"></script>
     <link rel="stylesheet" href="/app/pages/{{ name }}.css">
     <script src="/app/as.js" type="module"></script>
+    <script src="/app/pages/lang.js" type="module"></script>
 </body>
 
 </html>

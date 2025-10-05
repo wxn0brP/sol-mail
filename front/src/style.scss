@@ -77,6 +77,49 @@ nav {
     }
 }
 
+#popup-container {
+    .popup {
+        text-align: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        min-height: 150px;
+        min-width: 300px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid var(--accent);
+        z-index: 1000;
+
+        p {
+            color: var(--txt);
+        }
+
+        select,
+        button,
+        input {
+            border-radius: 5px;
+            padding: 5px 10px;
+            background-color: var(--accent);
+            border: 1px solid var(--accent);
+            color: var(--txt);
+
+            &:hover {
+                background-color: var(--accent2);
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1000px) {
     nav {
         z-index: 1000;
