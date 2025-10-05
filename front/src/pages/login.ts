@@ -28,7 +28,7 @@ loginForm.on("submit", async (event) => {
     const data = await res.json();
 
     if (data.err) {
-        errorMessage.innerHTML = data.msg;
+        errorMessage.innerHTML = t(data.msg);
     } else {
         localStorage.setItem("tokenExpiresAt", data.expiresAt);
         localStorage.setItem("name", data.name);

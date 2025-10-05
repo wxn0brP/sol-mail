@@ -40,9 +40,9 @@ uploadForm.addEventListener("submit", async (event) => {
     }).then(res => res.json());
 
     if (res.err) {
-        message.innerHTML = res.msg;
+        message.innerHTML = t(res.msg);
     } else {
-        message.innerHTML = "Upload finished.";
+        message.innerHTML = t("Upload finished") + ".";
         mailNameInput.value = "";
         fileInput.value = "";
     }
