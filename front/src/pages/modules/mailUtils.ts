@@ -25,13 +25,13 @@ export function getMailDateElement(id: string): string {
 
     let shortDate: string;
     if (diffDay > 0) {
-        shortDate = diffDay === 1 ? "1 day ago" : `${diffDay} days ago`;
+        shortDate = diffDay === 1 ? `1 ${t("day")} ${t("ago")}` : `${diffDay} ${t("days")} ${t("ago")}`;
     } else if (diffHour > 0) {
-        shortDate = `${diffHour}h ago`;
+        shortDate = `${diffHour}h ${t("ago")}`;
     } else if (diffMin > 0) {
-        shortDate = `${diffMin}m ago`;
+        shortDate = `${diffMin}m ${t("ago")}`;
     } else {
-        shortDate = `today ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+        shortDate = `${t("today")} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
     }
 
     return `<p title="${fullDate}">${shortDate}</p>`;
