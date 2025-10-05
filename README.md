@@ -12,7 +12,7 @@ Sol-Mail is a self-hosted file and message submission portal. It provides a simp
 
 ## Client
 
-- [Sol-Mail Client](https://github.com/wxn0brP/sol-mail-client)
+- [Sol Mail Client](https://github.com/wxn0brP/sol-mail-client)
 - [ScreenShots](https://github.com/wxn0brP/sol-mail-client/blob/master/screenshots.md)
 
 ## 🚀 Getting Started
