@@ -17,7 +17,7 @@ export const loginHandler: RouteHandler = async (req, res) => {
         const user = await db.master.findOne<User>("users", { name });
 
         if (!user) {
-            return { err: true, msg: "User not found" };
+            return { err: true, msg: "Invalid credentials" };
         }
 
         if (await db.master.findOne<Token>("token", { name: user.name })) {
