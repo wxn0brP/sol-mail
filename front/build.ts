@@ -42,7 +42,7 @@ await esbuild.build({
     ],
     outdir: "dist",
     bundle: true,
-    format: "esm",
+    format: "iife",
     platform: "browser",
     target: "es2022",
     sourcemap: true,

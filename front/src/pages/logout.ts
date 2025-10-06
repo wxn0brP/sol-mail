@@ -1,4 +1,4 @@
-import { confirm } from "../utils/popup";
+import { confirm } from "_popup";
 
 (window as any).logout = async function () {
     const conf = await confirm(t("Are you sure you want to logout") + "?");
