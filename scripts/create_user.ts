@@ -5,8 +5,7 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-// @ts-ignore
-async function prompt(question) {
+async function prompt(question: string): Promise<string> {
     return new Promise(resolve => {
         rl.question(question, resolve);
     });
@@ -14,6 +13,7 @@ async function prompt(question) {
 
 const name = await prompt("Enter the name: ");
 const pass = await prompt("Enter the password: ");
+rl.close();
 
 const res = await fetch("http://localhost:19851/auth/register", {
     method: "POST",
@@ -25,4 +25,3 @@ const res = await fetch("http://localhost:19851/auth/register", {
 
 const data = await res.json();
 console.log(data);
-rl.close();
