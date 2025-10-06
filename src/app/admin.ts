@@ -9,7 +9,7 @@ import { sanitizeDirName, sanitizeFileName } from "./files";
 
 const router = new Router();
 
-const checkAdmin: RouteHandler = async (req, res, next) => {
+const checkAdmin: RouteHandler = async (req, _, next) => {
     const user = req.user;
     if (!user) return { err: true, msg: "Unauthorized" };
 
@@ -21,7 +21,7 @@ const checkAdmin: RouteHandler = async (req, res, next) => {
 
 router.use(checkAdmin);
 
-router.get("/users", async (req, res) => {
+router.get("/users", async (_, res) => {
     const users = await db.master.find<User>("users", {}, {}, { select: ["name"] });
     return res.json(users.map(user => user.name));
 });
@@ -56,7 +56,7 @@ router.get("/files/:file", async (req, res) => {
     res.sendFile(filePath);
 });
 
-router.get("/version", async (req, res) => {
+router.get("/version", async (_, res) => {
     try {
         const currentSHA = execSync("git rev-parse HEAD", { encoding: "utf-8" }).trim();
 
@@ -71,7 +71,9 @@ router.get("/version", async (req, res) => {
         const isCurrent = !remoteSHA || currentSHA === remoteSHA;
 
         return res.json({
-            sha: currentSHA && remoteSHA,
+            success: !!(currentSHA && remoteSHA),
+            currentSHA,
+            remoteSHA,
             isCurrent
         });
     } catch (error) {

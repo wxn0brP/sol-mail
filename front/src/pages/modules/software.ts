@@ -1,8 +1,15 @@
-import { getMailDate, getMailDateElement, getMailDateText } from "./mailUtils";
+import { getMailDateText } from "./mailUtils";
 
 const verStatus = qs("#version-status");
 const softwarePopup = qs("#software-notification");
 const clientLatestUpdate = qs("#client-latest-update");
+
+interface VersionInfo {
+    success: boolean;
+    isCurrent: boolean;
+    currentSHA: string;
+    remoteSHA: string;
+}
 
 const versionInfo = {
     green: "Up to date",
@@ -16,10 +23,19 @@ function setVerInfoStatus(color: string) {
 }
 
 function checkVersionStatus() {
-    fetch("/api/admin/version").then((res) => res.json()).then((ver) => {
-        if (!ver.sha) return setVerInfoStatus("red");
-        if (!ver.isCurrent) qs("#toggle-software-notification").html("⬆️");
-        return setVerInfoStatus(ver.isCurrent ? "green" : "orange");
+    fetch("/api/admin/version").then((res) => res.json()).then((ver: VersionInfo) => {
+        if (!ver.success) return setVerInfoStatus("red");
+
+        if (ver.isCurrent)
+            return setVerInfoStatus("green");
+
+        qs("#toggle-software-notification").html("⬆️");
+        setVerInfoStatus("orange");
+        verStatus.clA("up")
+        verStatus.attrib("title", t("Show Changelog"));
+        verStatus.attrib("translate-title", "Show Changelog");
+        verStatus.on("click", () =>
+            window.open(`https://github.com/wxn0brP/sol-mail/compare/${ver.currentSHA}...${ver.remoteSHA}`));
     }).catch((err) => {
         console.error("Error fetching version info:", err);
         setVerInfoStatus("#f00");

@@ -84,6 +84,14 @@ summary {
     border: 1px solid #8b0bec;
     background-color: #222;
     color: var(--txt);
+
+    .up {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 #toggle-software-notification {
