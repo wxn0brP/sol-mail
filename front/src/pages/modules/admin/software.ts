@@ -61,4 +61,4 @@ checkVersionStatus();
 checkClientLatestUpdate();
 
 softwarePopup.fade = false;
-qs("#toggle-software-notification").on("click", () => softwarePopup.fadeToggle())
+qs("#toggle-software-notification").on("click", () => softwarePopup.fadeToggle());

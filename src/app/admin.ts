@@ -1,7 +1,7 @@
 import { RouteHandler, Router } from "@wxn0brp/falcon-frame";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
 import { execSync } from "child_process";
-import { existsSync, rmdirSync, rmSync, unlinkSync } from "fs";
+import { existsSync, rmSync } from "fs";
 import { join } from "path";
 import { db } from "../db";
 import { User } from "../types/auth";
@@ -72,7 +72,7 @@ router.get("/version", async (_, res) => {
 
         return res.json({
             success: !!(currentSHA && remoteSHA),
-            isCurrent: false
+            isCurrent
         });
     } catch (error) {
         console.error("Error getting git info:", error);
