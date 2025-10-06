@@ -73,3 +73,5 @@ function updateNotification() {
     notificationsContainer.style.display = notificationsCount ? "" : "none";
 }
 updateNotification();
+
+window.addEventListener("beforeunload", () => event.close());
