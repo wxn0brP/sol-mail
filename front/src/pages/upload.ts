@@ -42,8 +42,10 @@ uploadForm.addEventListener("submit", async (event) => {
 
     if (res.err) {
         message.innerHTML = t(res.msg);
+        message.attrib("translate", res.msg);
     } else {
-        message.innerHTML = t("Upload finished") + ".";
+        message.innerHTML = t("Upload finished");
+        message.attrib("translate", "Upload finished");
         mailNameInput.value = "";
         bodyInput.value = "";
         fileInput.value = "";
