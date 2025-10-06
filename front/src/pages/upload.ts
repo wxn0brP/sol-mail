@@ -45,6 +45,7 @@ uploadForm.addEventListener("submit", async (event) => {
     } else {
         message.innerHTML = t("Upload finished") + ".";
         mailNameInput.value = "";
+        bodyInput.value = "";
         fileInput.value = "";
     }
 });

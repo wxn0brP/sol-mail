@@ -1,12 +1,26 @@
 <h1 translate="Users Mails">Users Mails</h1>
-<section>
-    <label>
-        <span translate="Search">Search</span>:
-        <input type="text" id="search"
-            placeholder="Enter search term. Available masks: user:$user, name:$name, file:$file">
-    </label>
+<section id="search-container">
+    <label for="search"><span translate="Search">Search</span>:</label>
+    <div>
+        <input placeholder="Available masks: user:$user, name:$name, file:$file" id="search">
+        <button id="search-clear">X</button>
+    </div>
 </section>
-<aside>
+
+<article id="software-notification" style="display: none;">
+    <p>
+        <span translate="Version Status"></span>:
+        <span id="version-status">Checking...</span>
+    </p>
+    <p>
+        <span translate="Client latest update"></span>:
+        <span id="client-latest-update">Checking...</span>
+    </p>
+</article>
+
+<button id="toggle-software-notification">💜</button>
+
+<aside id="mail-notification" style="display: none;">
     <span translate="New Mails">New Mails</span>:
     <ul id="notifications"></ul>
 </aside>

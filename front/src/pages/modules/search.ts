@@ -1,4 +1,8 @@
 export const searchInput = qi("#search");
+qs("#search-clear").on("click", () => {
+    searchInput.value = "";
+    search();
+});
 
 export function search() {
     const openUserDetails = new Set<HTMLElement>();

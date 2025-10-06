@@ -4,10 +4,7 @@ export function getMailDate(id: string) {
     return parseInt(id.split("-")[0], 36);
 }
 
-export function getMailDateElement(id: string): string {
-    const ts = getMailDate(id);
-    const date = new Date(ts);
-
+export function getMailDateText(date: Date) {
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffSec = Math.floor(diffMs / 1000);
@@ -34,6 +31,15 @@ export function getMailDateElement(id: string): string {
         shortDate = `${t("today")} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
     }
 
+    return {
+        fullDate,
+        shortDate
+    }
+}
+
+export function getMailDateElement(id: string): string {
+    const date = new Date(getMailDate(id));
+    const { fullDate, shortDate } = getMailDateText(date);
     return `<p title="${fullDate}">${shortDate}</p>`;
 }
 

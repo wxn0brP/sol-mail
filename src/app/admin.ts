@@ -1,5 +1,6 @@
 import { RouteHandler, Router } from "@wxn0brp/falcon-frame";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
+import { execSync } from "child_process";
 import { existsSync } from "fs";
 import { join } from "path";
 import { db } from "../db";
@@ -53,6 +54,34 @@ router.get("/files/:file", async (req, res) => {
     const ct = getContentType(filePath);
     res.setHeader("Content-Type", ct);
     res.sendFile(filePath);
+});
+
+router.get("/version", async (req, res) => {
+    try {
+        const currentSHA = execSync("git rev-parse HEAD", { encoding: "utf-8" }).trim();
+
+        let remoteSHA = "";
+        try {
+            execSync("git fetch origin", { encoding: "utf-8" });
+            remoteSHA = execSync("git rev-parse origin/HEAD", { encoding: "utf-8" }).trim();
+        } catch (error) {
+            console.log("Could not get remote SHA, continuing with local SHA only:", error);
+        }
+
+        const isCurrent = !remoteSHA || currentSHA === remoteSHA;
+
+        return res.json({
+            sha: currentSHA && remoteSHA,
+            isCurrent
+        });
+    } catch (error) {
+        console.error("Error getting git info:", error);
+        res.status(500);
+        return res.json({
+            error: "Could not retrieve git information",
+            isCurrent: false
+        });
+    }
 });
 
 export const sse = router.sse("/sse");
