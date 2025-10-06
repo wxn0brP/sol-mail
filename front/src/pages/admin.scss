@@ -39,14 +39,15 @@ summary {
 
     #search-clear {
         padding: 0.5rem 1rem;
-        background-color: red;
-        color: #fff;
-        border: none;
+        background-color: var(--back);
+        color: red;
         border-radius: 4px;
         cursor: pointer;
+        border: 1px solid red;
 
         &:hover {
-            background-color: var(--accent2);
+            background-color: red;
+            color: var(--txt);
         }
     }
 }
