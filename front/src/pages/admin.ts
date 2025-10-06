@@ -1,12 +1,12 @@
-import "../utils/requireLogin";
-import { checkTokenRefresh } from "../utils/tokenRefresh";
+import { search, searchInput } from "#admin/search";
+import "#admin/software";
+import "#admin/sse";
+import { displayFiles, initShow } from "#mail/displayFiles";
+import { getMailBody, getMailDateElement, sort } from "#mail/mailUtils";
+import { Mail } from "#types";
+import "_requireLogin";
+import { checkTokenRefresh } from "_tokenRefresh";
 import "./admin.scss";
-import { displayFiles, initShow } from "./modules/displayFiles";
-import { getMailBody, getMailDateElement, sort } from "./modules/mailUtils";
-import { search, searchInput } from "./modules/search";
-import { Mail } from "./modules/types";
-import "./modules/software";
-import "./modules/sse";
 
 checkTokenRefresh();
 export const app = qs("#app");

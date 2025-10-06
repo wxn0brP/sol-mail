@@ -1,8 +1,8 @@
-import { app } from "../admin";
-import { displayFiles } from "./displayFiles";
-import { getMailDateElement, getMailBody } from "./mailUtils";
+import { displayFiles } from "#mail/displayFiles";
+import { getMailBody, getMailDateElement } from "#mail/mailUtils";
+import { Mail } from "#types";
+import { app } from "@admin";
 import { searchInput, search } from "./search";
-import { Mail } from "./types";
 
 const notifications = qs("#notifications");
 const notificationsContainer = qs("#mail-notification");

@@ -1,4 +1,4 @@
-import { select } from "../utils/popup";
+import { select } from "_popup";
 
 qs("#change-lang").addEventListener("click", async () => {
     const langsRaw = await fetch("/app/lang.json").then(res => res.json()).catch(() => ({})) as Record<string, string>;

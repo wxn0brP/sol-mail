@@ -3,7 +3,17 @@
         "module": "es2022",
         "target": "es2024",
         "moduleResolution": "bundler",
-        "paths": {},
+        "paths": {
+            "#*": [
+                "./src/pages/modules/*"
+            ],
+            "@*": [
+                "./src/pages/*"
+            ],
+            "_*": [
+                "./src/utils/*"
+            ]
+        },
         "esModuleInterop": true,
         "skipLibCheck": true,
         "outDir": "./dist",

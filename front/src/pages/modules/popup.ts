@@ -9,7 +9,7 @@ import markdown from "highlight.js/lib/languages/markdown";
 import plaintext from "highlight.js/lib/languages/plaintext";
 import "highlight.js/styles/atom-one-dark.css";
 
-import { image, audio, video, code } from "./extensions";
+import { image, audio, video, code } from "./mail/extensions";
 
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("typescript", typescript);

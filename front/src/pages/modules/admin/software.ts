@@ -1,4 +1,4 @@
-import { getMailDateText } from "./mailUtils";
+import { getMailDateText } from "#mail/mailUtils";
 
 const verStatus = qs("#version-status");
 const softwarePopup = qs("#software-notification");

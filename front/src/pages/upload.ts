@@ -1,6 +1,6 @@
-import { confirm } from "../utils/popup";
-import "../utils/requireLogin";
-import { checkTokenRefresh } from "../utils/tokenRefresh";
+import { confirm } from "_popup";
+import "_requireLogin";
+import { checkTokenRefresh } from "_tokenRefresh";
 import "./upload.scss";
 
 checkTokenRefresh();

@@ -1,9 +1,9 @@
-import "../utils/requireLogin";
-import { checkTokenRefresh } from "../utils/tokenRefresh";
+import { displayFiles, initShow } from "#mail/displayFiles";
+import { getMailBody, getMailDateElement, sort } from "#mail/mailUtils";
+import { Mail } from "#types";
+import "_requireLogin";
+import { checkTokenRefresh } from "_tokenRefresh";
 import "./mails.scss";
-import { displayFiles, initShow } from "./modules/displayFiles";
-import { getMailBody, getMailDateElement, sort } from "./modules/mailUtils";
-import { Mail } from "./modules/types";
 
 checkTokenRefresh();
 const mailsContainer = qs(".mails-container");

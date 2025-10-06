@@ -1,4 +1,4 @@
-import { Mail } from "./types";
+import { Mail } from "#types";
 
 export function getMailDate(id: string) {
     return parseInt(id.split("-")[0], 36);

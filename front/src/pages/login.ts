@@ -1,4 +1,4 @@
-import { checkTokenRefresh } from "../utils/tokenRefresh";
+import { checkTokenRefresh } from "_tokenRefresh";
 import "./login.scss";
 
 checkTokenRefresh(false);
