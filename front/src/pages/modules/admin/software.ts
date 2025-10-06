@@ -7,8 +7,6 @@ const clientLatestUpdate = qs("#client-latest-update");
 interface VersionInfo {
     success: boolean;
     isCurrent: boolean;
-    currentSHA: string;
-    remoteSHA: string;
 }
 
 const versionInfo = {
@@ -34,8 +32,13 @@ function checkVersionStatus() {
         verStatus.clA("up")
         verStatus.attrib("title", t("Show Changelog"));
         verStatus.attrib("translate-title", "Show Changelog");
-        verStatus.on("click", () =>
-            window.open(`https://github.com/wxn0brP/sol-mail/compare/${ver.currentSHA}...${ver.remoteSHA}`));
+        verStatus.on("click", async () => {
+            verStatus.html("Updating...").css("color", "orange");
+            const data = await fetch("/api/admin/auto-update").then(res => res.json());
+            if (data.err) return alert(t(data.msg));
+            alert(t("Please start server again") + ".");
+            location.reload();
+        });
     }).catch((err) => {
         console.error("Error fetching version info:", err);
         setVerInfoStatus("#f00");

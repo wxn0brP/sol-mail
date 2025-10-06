@@ -1,7 +1,7 @@
 import { RouteHandler, Router } from "@wxn0brp/falcon-frame";
 import { getContentType } from "@wxn0brp/falcon-frame/helpers";
 import { execSync } from "child_process";
-import { existsSync } from "fs";
+import { existsSync, rmdirSync, rmSync, unlinkSync } from "fs";
 import { join } from "path";
 import { db } from "../db";
 import { User } from "../types/auth";
@@ -72,9 +72,7 @@ router.get("/version", async (_, res) => {
 
         return res.json({
             success: !!(currentSHA && remoteSHA),
-            currentSHA,
-            remoteSHA,
-            isCurrent
+            isCurrent: false
         });
     } catch (error) {
         console.error("Error getting git info:", error);
@@ -83,6 +81,20 @@ router.get("/version", async (_, res) => {
             error: "Could not retrieve git information",
             isCurrent: false
         });
+    }
+});
+
+router.get("/auto-update", async (_, res) => {
+    try {
+        execSync("git pull");
+        rmSync("front/dist", { recursive: true, force: true });
+        execSync("bun run setup");
+        res.json({ success: true });
+        process.exit(0);
+    } catch (error) {
+        console.error("Error updating:", error);
+        res.status(500);
+        return res.json({ error: "Could not update" });
     }
 });
 
