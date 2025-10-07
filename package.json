@@ -15,7 +15,8 @@
         "start": "bun run src/index.ts",
         "setup": "bun install && cd front && bun install && bun run build.ts && cd ..",
         "script:add_admin": "bun run scripts/add_admin.ts",
-        "script:create_user": "bun run scripts/create_user.ts"
+        "script:add_user": "bun run scripts/add_user.ts",
+        "script:create_user": "bun run scripts/add_user.ts"
     },
     "devDependencies": {
         "@types/bun": "*",

@@ -68,13 +68,13 @@ This will launch the backend server, which handles the API and serves the web in
 To log in, you first need to create a user account.
 
 ```bash
-bun run scripts/create_user.ts
+bun run script:add_user
 ```
 
 ### 6. Add Admin User
 
 ```bash
-bun run scripts/add_admin.ts <username>
+bun run script:add_admin
 ```
 
 ## For Developers
