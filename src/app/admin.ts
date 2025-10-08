@@ -42,7 +42,7 @@ router.get("/files/:file", async (req, res) => {
     const { file } = req.params;
     if (!user || !name) {
         res.status(400);
-        return res.json({ message: "User and name name are required" });
+        return res.json({ message: "User and mail name are required" });
     }
     const filePath = join("data", "files", sanitizeDirName(user), sanitizeDirName(name), sanitizeFileName(file));
 
