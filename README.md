@@ -1,5 +1,7 @@
 # Sol Mail
 
+[Polski](./README.pl.md) | [English](./README.md)
+
 Sol-Mail is a self-hosted file and message submission portal. It provides a simple and secure way for users to send files and messages to a central administrator, making it an ideal solution for scenarios like collecting assignments, receiving project files, or any situation where secure, one-way submission is needed.
 
 ## Key Features
