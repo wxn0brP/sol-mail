@@ -1,6 +1,7 @@
 # Sol Mail
 
-[Polski](./README.pl.md) | [English](./README.md)
+[![English](https://img.shields.io/badge/lang-English-blue)](README.md)
+[![Polski](https://img.shields.io/badge/lang-Polski-red)](#)
 
 Sol-Mail to samodzielnie hostowany portal do przesyłania plików i wiadomości. Zapewnia prosty i bezpieczny sposób, w jaki użytkownicy mogą wysyłać pliki i wiadomości do centralnego administratora, co czyni go idealnym rozwiązaniem w sytuacjach takich jak zbieranie zadań, otrzymywanie plików projektowych czy inne przypadki, w których wymagane jest bezpieczne przesyłanie danych w jedną stronę.
 
