@@ -26,8 +26,7 @@ async function setLang(lang: string) {
         el.setAttribute("placeholder", t(el.getAttribute("translate-placeholder") || ""));
     });
     qs("title").textContent = "Sol Mail | " + t(titleString);
-    localStorage.setItem("lang", lang);
-    document.cookie = `lang=${lang}; expires=${(Date.now() + 1000 * 60 * 60 * 24)}; path=/; Max-Age=86400`;
+    (window as any).setLocalLang?.(lang);
 }
 
 loadTranslations(loadedLang).then(() => {

@@ -1,5 +1,3 @@
-export const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
-    const [name, value] = cookie.split("=");
-    acc[name] = value;
-    return acc;
-}, {} as Record<string, string>);
+import Cookies from "js-cookie";
+
+export const cookies = Cookies.get() as Record<string, string>;

@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@wxn0brp/flanker-ui": "^0.4.3",
-        "highlight.js": "^11.11.1"
+        "highlight.js": "^11.11.1",
+        "js-cookie": "^3.0.5"
     }
 }
