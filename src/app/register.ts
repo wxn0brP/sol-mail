@@ -25,7 +25,7 @@ export const registerHandler: RouteHandler = async (req, res) => {
         };
 
         await db.master.add("users", user);
-        console.log("User created:", user);
+        console.log("User created:", user.name);
 
         return { err: false, msg: "User created successfully" };
     } catch (error) {
