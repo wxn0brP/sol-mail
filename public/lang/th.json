@@ -40,5 +40,12 @@
     "Invalid credentials": "ข้อมูลเข้าสู่ระบบไม่ถูกต้อง",
     "Users Mails": "อีเมลของผู้ใช้",
     "New Mails": "อีเมลใหม่",
-    "Search": "ค้นหา"
+    "Search": "ค้นหา",
+    "Please enter a mail name": "กรุณากรอกชื่ออีเมล",
+    "Up to date": "เป็นเวอร์ชันล่าสุด",
+    "Update available": "มีการอัปเดตใหม่",
+    "Checking Error": "เกิดข้อผิดพลาดในการตรวจสอบ",
+    "Connection error": "ข้อผิดพลาดในการเชื่อมต่อ",
+    "Could not retrieve git information": "ไม่สามารถดึงข้อมูลจาก git ได้",
+    "Please start server again": "กรุณารีสตาร์ทเซิร์ฟเวอร์อีกครั้ง"
 }

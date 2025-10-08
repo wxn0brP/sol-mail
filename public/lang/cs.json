@@ -40,5 +40,12 @@
     "Invalid credentials": "Neplatné přihlašovací údaje",
     "Users Mails": "E-maily uživatelů",
     "New Mails": "Nové e-maily",
-    "Search": "Hledat"
+    "Search": "Hledat",
+    "Please enter a mail name": "Zadejte název e-mailu",
+    "Up to date": "Aktuální verze",
+    "Update available": "Dostupná aktualizace",
+    "Checking Error": "Chyba při kontrole",
+    "Connection error": "Chyba připojení",
+    "Could not retrieve git information": "Nelze získat informace z gitu",
+    "Please start server again": "Prosím, spusťte server znovu"
 }

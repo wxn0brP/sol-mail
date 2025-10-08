@@ -40,5 +40,12 @@
     "Invalid credentials": "凭证无效",
     "Users Mails": "用户邮件",
     "New Mails": "新邮件",
-    "Search": "搜索"
+    "Search": "搜索",
+    "Please enter a mail name": "请输入邮件名称",
+    "Up to date": "已是最新版本",
+    "Update available": "有可用更新",
+    "Checking Error": "检查错误",
+    "Connection error": "连接错误",
+    "Could not retrieve git information": "无法获取 git 信息",
+    "Please start server again": "请重新启动服务器"
 }

@@ -40,5 +40,12 @@
     "Invalid credentials": "Érvénytelen hitelesítő adatok",
     "Users Mails": "Felhasználói e-mailek",
     "New Mails": "Új e-mailek",
-    "Search": "Keresés"
+    "Search": "Keresés",
+    "Please enter a mail name": "Kérlek, add meg az e-mail nevét",
+    "Up to date": "Naprakész verzió",
+    "Update available": "Frissítés elérhető",
+    "Checking Error": "Ellenőrzési hiba",
+    "Connection error": "Kapcsolódási hiba",
+    "Could not retrieve git information": "Nem sikerült lekérni a git információkat",
+    "Please start server again": "Kérlek, indítsd újra a szervert"
 }
