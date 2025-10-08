@@ -23,6 +23,7 @@ router.use("/app", app);
 router.get("/page/:name", createLangRouter({
     meta: {
         login: { title: "Login" },
+        register: { title: "Register" },
         mails: { title: "Mails" },
         upload: { title: "Upload Files" },
         admin: { title: "Admin" }
