@@ -30,10 +30,16 @@ function checkVersionStatus() {
         qs("#toggle-software-notification").html("⬆️");
         setVerInfoStatus("orange");
         verStatus.clA("up")
-        verStatus.attrib("title", t("Show Changelog"));
-        verStatus.attrib("translate-title", "Show Changelog");
+        verStatus.attrib("title", t("Click to update"));
+        verStatus.attrib("translate-title", "Click to update");
         verStatus.on("click", async () => {
-            verStatus.html("Updating...").css("color", "orange");
+            verStatus.html(t("Updating")).css("color", "orange");
+
+            const loading = document.createElement("span");
+            verStatus.appendChild(loading);
+            let i = 0;
+            setInterval(() => loading.html(".".repeat(i++ % 4)), 300);
+
             const data = await fetch("/api/admin/auto-update").then(res => res.json());
             if (data.err) return alert(t(data.msg));
             alert(t("Please start server again") + ".");
