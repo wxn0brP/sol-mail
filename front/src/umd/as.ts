@@ -13,3 +13,18 @@ if (loginAs) {
 }
 
 qs("nav p").on("click", () => qs("nav ul").clT("show"));
+
+(() => {
+    const footer = qs("footer");
+    let animation = false;
+    qs("#open-info").on("click", () => {
+        if (animation) return;
+        animation = true;
+        footer.style.display = "";
+
+        setTimeout(() => {
+            animation = false;
+            footer.style.display = "none";
+        }, 10_000);
+    });
+})();

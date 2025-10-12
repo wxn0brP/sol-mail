@@ -14,7 +14,7 @@
 <body>
     <nav>
         <p>☰</p>
-        <div>👤 <span id="who" translate="Click to reveal">Click to reveal</span></div>
+        <div id="who-div">👤 <span id="who" translate="Click to reveal">Click to reveal</span></div>
         <ul>
             <li><a href="/page/upload" translate="Upload Files"></a></li>
             <li><a href="/page/mails" translate="View Your Mails"></a></li>
@@ -22,11 +22,12 @@
             <li><a href="#" onclick="logout()" translate="Logout"></a></li>
             <li><a href="#" id="change-lang">🌐</a></li>
         </ul>
+        <div id="open-info">💜</div>
     </nav>
     <div id="popup-container"></div>
     <script src="/app/html.js"></script>
     {{ body }}
-    <footer>
+    <footer style="display: none;">
         <p>Sol Mail - Self-Hosted File & Message Portal</p>
         <p>
             Made with 💜 by

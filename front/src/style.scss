@@ -55,7 +55,7 @@ nav {
         }
     }
 
-    div {
+    #who-div {
         position: absolute;
         top: 0;
         left: 10px;
@@ -68,6 +68,17 @@ nav {
         }
     }
 
+    #open-info {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 1.2em;
+        cursor: pointer;
+    }
+
     p {
         display: none;
         position: absolute;
@@ -78,11 +89,55 @@ nav {
 }
 
 footer {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     text-align: center;
     padding: 20px;
     margin-top: 20px;
     color: var(--txt);
-    font-size: 0.9rem;
+    background-color: var(--back);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+
+    animation: footer-animation 10s ease-in-out;
+}
+
+@keyframes footer-animation {
+    0% {
+        bottom: -100px;
+    }
+
+    5% {
+        bottom: 20px;
+    }
+
+    8% {
+        bottom: 10px;
+    }
+
+    94% {
+        bottom: 10px;
+    }
+
+    96% {
+        bottom: 20px;
+    }
+
+    97% {
+        bottom: 20px;
+    }
+
+    100% {
+        bottom: -100px;
+    }
 }
 
 #popup-container {
