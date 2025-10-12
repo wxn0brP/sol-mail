@@ -1,11 +1,16 @@
 import { select } from "_popup";
 import Cookies from "js-cookie";
 
+let opened = false;
+
 qs("#change-lang").addEventListener("click", async () => {
+    if (opened) return;
+    opened = true;
     const langsRaw = await fetch("/app/lang.json").then(res => res.json()).catch(() => ({})) as Record<string, string>;
     const langs = Object.entries(langsRaw).map(([lang, name]) => ({ value: lang, label: name }));
     const lang = await select(t("Select your language"), langs, localStorage.getItem("lang") || navigator.language?.split("-")?.[0] || "en");
     setLang(lang);
+    opened = false;
 });
 
 (window as any).setLocalLang = (lang: string) => {
