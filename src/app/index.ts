@@ -6,19 +6,17 @@ import { filesRouter } from "./files";
 
 const router = new Router();
 
-const api = new Router();
+const api = router.router("/api");
 api.use(authMiddleware);
 api.use("/files", filesRouter);
 api.use("/admin", adminRouter);
-router.use("/api", api);
 
 router.use("/auth", authRouter);
 
-const app = new Router();
+const app = router.router("/app");
 app.static("/", "public/assets");
 app.static("/lang", "public/lang");
 app.static("/", "front/dist");
-router.use("/app", app);
 
 router.get("/page/:name", createLangRouter({
     meta: {

@@ -20,4 +20,4 @@ app.get("/*", (req, res) => {
     return { status: 404, message: "Not Found" }
 });
 
-app.listen(+process.env.PORT || 19851, true);
+app.l(19851);
