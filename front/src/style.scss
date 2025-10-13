@@ -180,6 +180,20 @@ footer {
                 background-color: var(--accent2);
             }
         }
+
+        &.confirm {
+            button {
+                background-color: var(--c);
+                border: 1px solid var(--c);
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    transform: translate(0, -2px) scale(1.05);
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 }
 

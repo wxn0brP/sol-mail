@@ -1,4 +1,4 @@
-import { confirm } from "_popup";
+import { _confirm } from "_popup";
 import "_requireLogin";
 import { checkTokenRefresh } from "_tokenRefresh";
 import "./upload.scss";
@@ -19,7 +19,7 @@ fileInput.addEventListener("change", async (event) => {
         for (let i = 0; i < files.length; i++) {
             const existsIndex = selectedFiles.findIndex(f => f.name === files[i].name);
             if (existsIndex !== -1) {
-                const conf = await confirm(t("A file '$' with the same name already exists. Do you want to replace it").replace("$", files[i].name) + "?");
+                const conf = await _confirm(t("A file '$' with the same name already exists. Do you want to replace it").replace("$", files[i].name) + "?");
                 if (conf) continue;
                 selectedFiles.splice(existsIndex, 1);
             }
@@ -62,7 +62,7 @@ uploadForm.addEventListener("submit", async (event) => {
     const body = bodyInput.value.trim();
 
     if (selectedFiles.length === 0) {
-        const conf = await confirm(t("Are you sure you want to upload an empty file") + "?");
+        const conf = await _confirm(t("Are you sure you want to upload an empty file") + "?", true);
         if (!conf) return;
     }
 

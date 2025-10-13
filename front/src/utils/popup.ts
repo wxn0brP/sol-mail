@@ -1,20 +1,23 @@
 const popupContainer = qs("#popup-container");
 
-export async function confirm(message: string): Promise<boolean> {
+export async function _confirm(message: string, yesFirst = false): Promise<boolean> {
     const popup = document.createElement("div");
+    const btns = [{ label: "no", id: "red" }, { label: "yes", id: "green" }];
+    if (yesFirst) btns.reverse();
+
     popup.className = "popup";
     popup.innerHTML = `
-        <div class="popup">
+        <div class="popup confirm">
             <p>${message}</p>
             <div style="display: flex; gap: 1rem;">
-                <button class="confirm">${t("Yes")}</button>
-                <button class="cancel">${t("No")}</button>
+                <button data-id="${btns[0].id}" style="--c: ${btns[0].id}">${t(btns[0].label)}</button>
+                <button data-id="${btns[1].id}" style="--c: ${btns[1].id}">${t(btns[1].label)}</button>
             </div>
         </div>
     `;
 
-    const confirmButton = popup.qs(".confirm");
-    const cancelButton = popup.qs(".cancel");
+    const confirmButton = popup.qs("green", 1);
+    const cancelButton = popup.qs("red", 1);
     const promise = new Promise<boolean>(resolve => {
         confirmButton.addEventListener("click", () => {
             resolve(true);
@@ -41,7 +44,7 @@ export async function confirm(message: string): Promise<boolean> {
     return promise;
 }
 
-export async function alert(message: string) {
+export async function _alert(message: string) {
     const popup = document.createElement("div");
     popup.className = "popup";
     popup.innerHTML = `
@@ -70,7 +73,7 @@ export async function alert(message: string) {
     return promise;
 }
 
-export async function select<T>(message: string, options: { value: T; label: string }[], defaultValue?: T): Promise<T | null> {
+export async function _select<T>(message: string, options: { value: T; label: string }[], defaultValue?: T): Promise<T | null> {
     const popup = document.createElement("div");
     popup.className = "popup";
     popup.innerHTML = `
