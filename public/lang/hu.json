@@ -47,5 +47,10 @@
     "Checking Error": "Ellenőrzési hiba",
     "Connection error": "Kapcsolódási hiba",
     "Could not retrieve git information": "Nem sikerült lekérni a git információkat",
-    "Please start server again": "Kérlek, indítsd újra a szervert"
+    "Please start server again": "Kérlek, indítsd újra a szervert",
+    "Browse": "Böngészés",
+    "No files selected": "Nincs fájl kiválasztva",
+    "Version Status": "Verzió állapota",
+    "Updating": "Frissítés folyamatban...",
+    "Client latest update": "Kliens legutóbbi frissítése"
 }

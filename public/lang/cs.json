@@ -47,5 +47,10 @@
     "Checking Error": "Chyba při kontrole",
     "Connection error": "Chyba připojení",
     "Could not retrieve git information": "Nelze získat informace z gitu",
-    "Please start server again": "Prosím, spusťte server znovu"
+    "Please start server again": "Prosím, spusťte server znovu",
+    "Browse": "Procházet",
+    "No files selected": "Nebyly vybrány žádné soubory",
+    "Version Status": "Stav verze",
+    "Updating": "Aktualizuji...",
+    "Client latest update": "Poslední aktualizace klienta"
 }

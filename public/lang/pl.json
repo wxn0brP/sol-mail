@@ -48,6 +48,9 @@
     "Connection error": "Błąd połączenia",
     "Could not retrieve git information": "Nie można pobrać informacji z git'a",
     "Please start server again": "Proszę zresetować serwer",
-    "Yes": "Tak",
-    "No": "Nie"
+    "Browse": "Przeglądaj",
+    "No files selected": "Nie wybrano plików",
+    "Version Status": "Status wersji",
+    "Updating": "Aktualizuje...",
+    "Client latest update": "Ostatnia aktualizacja klienta"
 }
