@@ -47,5 +47,7 @@
     "Checking Error": "Błąd sprawdzania",
     "Connection error": "Błąd połączenia",
     "Could not retrieve git information": "Nie można pobrać informacji z git'a",
-    "Please start server again": "Proszę zresetować serwer"
+    "Please start server again": "Proszę zresetować serwer",
+    "Yes": "Tak",
+    "No": "Nie"
 }
