@@ -25,6 +25,6 @@ qs("nav p").on("click", () => qs("nav ul").clT("show"));
         setTimeout(() => {
             animation = false;
             footer.style.display = "none";
-        }, 10_000);
+        }, 9980);
     });
 })();
