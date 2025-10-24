@@ -53,6 +53,13 @@ export function displayFiles({ name, files, apiPath, containerId, user }: Displa
             if (popupSupported.includes(extension)) {
                 e.preventDefault();
                 openFilePopup(url, filename);
+                return;
+            }
+
+            const zhiva = localStorage.getItem("zhiva");
+            if (zhiva) {
+                e.preventDefault();
+                fetch(`http://localhost:${zhiva}/download?path=${encodeURIComponent(url)}&token=${localStorage.getItem("token")}`);
             }
         });
     });

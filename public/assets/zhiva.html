@@ -1,0 +1,5 @@
+<script>
+    const port = new URLSearchParams(window.location.search).get("port");
+    localStorage.setItem("zhiva", port);
+    window.location.href = "/";
+</script>
