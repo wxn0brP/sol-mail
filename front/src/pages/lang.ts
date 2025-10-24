@@ -1,5 +1,4 @@
 import { _select } from "_popup";
-import Cookies from "js-cookie";
 
 let opened = false;
 
@@ -14,9 +13,7 @@ qs("#change-lang").addEventListener("click", async () => {
 });
 
 (window as any).setLocalLang = (lang: string) => {
-    Cookies.set("lang", lang, {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        path: "/"
-    });
+    const maxAge = 50 * 365.25 * 24 * 60 * 60; // 50 years
+    document.cookie = `lang=${lang}; max-age=${maxAge}; path=/`;
     localStorage.setItem("lang", lang);
 }

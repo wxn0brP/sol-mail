@@ -14,16 +14,10 @@ export const inDbCache = new AnotherCache<Token>({
     ttl: 30 * 1000 // 30 s
 });
 
-router.post("/logout", async (req, res) => {
-    res.setHeader(
-        "Set-Cookie",
-        "token=; Path=/; SameSite=Lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
-    );
-
+router.post("/logout", async (req) => {
+    if (!req.cookies.token) return { msg: "Error" };
     await db.master.removeOne("token", { _id: req.cookies.token });
-
-    res.status(200);
-    return res.json({ msg: "Logout successful" });
+    return { msg: "Logout successful" };
 });
 
 router.post("/refresh", async (req, res) => {
@@ -42,7 +36,7 @@ router.post("/refresh", async (req, res) => {
             audience: "urn:example:audience"
         }) as any;
 
-        const { exp } = await setToken({ name: payload.name, _id: payload._id }, res);
+        const { exp } = await setToken({ name: payload.name, _id: payload._id });
 
         return res.json({ msg: "Token refreshed", expiresAt: exp.getTime() });
     } catch (error) {

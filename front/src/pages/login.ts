@@ -1,5 +1,4 @@
 import { checkTokenRefresh } from "_tokenRefresh";
-import Cookies from "js-cookie";
 import "./login.scss";
 
 checkTokenRefresh(false);
@@ -39,14 +38,9 @@ loginForm.on("submit", async (event) => {
     } else {
         localStorage.setItem("tokenExpiresAt", data.expiresAt);
         localStorage.setItem("name", data.name);
-        setTimeout(() => {
-            if (!Cookies.get("token") || Cookies.get("token")!.length < 20)
-                Cookies.set("token", data.token, { 
-                    expires: new Date(data.expiresAt), 
-                    path: "/" 
-                });
-            next();
-        });
+        localStorage.setItem("token", data.token);
+        document.cookie = `token=${data.token}; path=/; SameSite=Lax; expires=${new Date(data.expiresAt).toUTCString()}`;
+        next();
     }
 });
 

@@ -31,7 +31,7 @@ export const loginHandler: RouteHandler = async (req, res) => {
             return { err: true, msg: "Invalid credentials" };
         }
 
-        const { exp, token, expirationTime } = await setToken(user, res);
+        const { exp, token, expirationTime } = await setToken(user);
         cache.set(
             token,
             { _id: user._id, name: user.name },

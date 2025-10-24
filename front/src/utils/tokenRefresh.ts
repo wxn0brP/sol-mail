@@ -5,6 +5,7 @@ export async function refreshToken(next = true) {
     if (res.ok) {
         const { expiresAt } = await res.json();
         localStorage.setItem("tokenExpiresAt", expiresAt);
+        document.cookie = `token=${localStorage.getItem("token")}; path=/; SameSite=Lax; expires=${new Date(expiresAt).toUTCString()}`;
         tokenExpiresAt = expiresAt;
     }
     else if (next) window.location.href = "/page/login?next=" + window.location.pathname;

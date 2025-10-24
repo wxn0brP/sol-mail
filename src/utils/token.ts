@@ -1,9 +1,8 @@
 import { SignJWT } from "jose";
 import { parseTimeToMs } from "./time";
 import { User } from "../types/auth";
-import { FFResponse } from "@wxn0brp/falcon-frame";
 
-export async function setToken(user: Pick<User, "name" | "_id">, res?: FFResponse) {
+export async function setToken(user: Pick<User, "name" | "_id">) {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     const alg = "HS256";
     const tokenLifetime = process.env.TOKEN_LIFETIME || "2h";
@@ -18,11 +17,6 @@ export async function setToken(user: Pick<User, "name" | "_id">, res?: FFRespons
 
     const expirationTime = parseTimeToMs(tokenLifetime);
     const exp = new Date(Date.now() + expirationTime);
-
-    if (res) res.setHeader(
-        "Set-Cookie",
-        `token=${jwt}; Path=/; Secure=false; SameSite=Lax; Expires=${exp.toUTCString()}`
-    );
 
     return {
         token: jwt,
