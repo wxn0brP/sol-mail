@@ -24,12 +24,12 @@
     },
     "dependencies": {
         "@types/busboy": "^1.5.4",
-        "@wxn0brp/ac": "^0.0.2",
-        "@wxn0brp/db": "^0.40.1",
-        "@wxn0brp/falcon-frame": "^0.5.0",
+        "@wxn0brp/ac": "^0.0.3",
+        "@wxn0brp/db": "^0.40.3",
+        "@wxn0brp/falcon-frame": "^0.5.3",
         "@wxn0brp/falcon-frame-lang": "github:wxn0brP/FalconFrame-lang#dist",
         "busboy": "^1.6.0",
         "dotenv": "^17.2.3",
-        "jose": "^6.1.0"
+        "jose": "^6.1.2"
     }
 }
