@@ -87,6 +87,10 @@ bun run script:add_admin
 - **Backend**: TypeScript, Bun, `@wxn0brp/falcon-frame` (Web Framework), `@wxn0brp/db` (DB), `jose` (JWT)
 - **Frontend**: TypeScript, SCSS, esbuild, `@wxn0brp/flanker-ui` (UI)
 
+### Docs
+
+[Docs](./docs/base.md)
+
 ### Contributing
 
 You are welcome to contribute to the project.
