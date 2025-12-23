@@ -80,6 +80,37 @@ bun run script:add_user
 bun run script:add_admin
 ```
 
+## Importing Emails
+
+You can import emails from a local directory using a provided script. This is useful for migrating existing emails or adding them in bulk.
+
+### 1. Prepare the Import Directory
+
+Create a directory named `import` in the root of the project. Inside this directory, create a subdirectory for each email you want to import. The name of the subdirectory will be used as the email's name. Place all files for that email inside its subdirectory.
+
+For example:
+```
+./import/
+├───my-first-email/
+│   ├───attachment1.txt
+│   └───image.jpg
+└───another-email/
+    └───document.pdf
+```
+
+### 2. Run the Import Script
+
+Execute the following command to start the import process:
+
+```bash
+bun run script:import_mails
+```
+
+The script will:
+- Sanitize the email names (the subdirectory names) and file names.
+- Copy the files to the appropriate data directory.
+- Create a database entry for each email, assigning it to the `public` user.
+
 ## For Developers
 
 ### Technology Stack

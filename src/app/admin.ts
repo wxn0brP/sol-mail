@@ -5,7 +5,7 @@ import { existsSync, rmSync } from "fs";
 import { join } from "path";
 import { db } from "../db";
 import { User } from "../types/auth";
-import { sanitizeDirName, sanitizeFileName } from "./files";
+import { sanitizeDirName, sanitizeFileName } from "../utils/sanitize";
 
 const router = new Router();
 

@@ -6,6 +6,7 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import { db } from "../db";
 import { sse } from "./admin";
+import { sanitizeDirName, sanitizeFileName } from "../utils/sanitize";
 
 const router = new Router();
 
@@ -14,14 +15,6 @@ if (!fs.existsSync("data")) {
 }
 if (!fs.existsSync("data/files")) {
     fs.mkdirSync("data/files");
-}
-
-export function sanitizeDirName(name: string): string {
-    return name.replace(/[\/\?%*:|"<>^.]/g, "_");
-}
-
-export function sanitizeFileName(name: string): string {
-    return name.replace(/[\/\?%*:|"<>^]/g, "_");
 }
 
 let MAX_FILE_SIZE = 0;

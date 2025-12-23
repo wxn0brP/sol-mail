@@ -80,6 +80,37 @@ bun run script:add_user
 bun run script:add_admin
 ```
 
+## Importowanie E-maili
+
+Możesz importować e-maile z lokalnego katalogu za pomocą dostarczonego skryptu. Jest to przydatne do migrowania istniejących e-maili lub dodawania ich hurtowo.
+
+### 1. Przygotuj katalog do importu
+
+Utwórz katalog o nazwie `import` w katalogu głównym projektu. Wewnątrz tego katalogu utwórz podkatalog dla każdego e-maila, który chcesz zaimportować. Nazwa podkatalogu zostanie użyta jako nazwa e-maila. Wszystkie pliki dla danego e-maila umieść w jego podkatalogu.
+
+Na przykład:
+```
+./import/
+├───moj-pierwszy-email/
+│   ├───załącznik1.txt
+│   └───obrazek.jpg
+└───inny-email/
+    └───dokument.pdf
+```
+
+### 2. Uruchom skrypt importujący
+
+Wykonaj następujące polecenie, aby rozpocząć proces importowania:
+
+```bash
+bun run script:import_mails
+```
+
+Skrypt:
+- Zsanityzuje nazwy e-maili (nazwy podkatalogów) i nazwy plików.
+- Skopiuje pliki do odpowiedniego katalogu danych.
+- Utworzy wpis w bazie danych dla każdego e-maila, przypisując go do użytkownika `public`.
+
 ## Dla programistów
 
 ### Stos technologiczny
