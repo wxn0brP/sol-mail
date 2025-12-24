@@ -115,3 +115,19 @@ summary {
         border-radius: 10px;
     }
 }
+
+#sorting-options-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 5px;
+
+    select {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: var(--background);
+        color: var(--text-color);
+    }
+}
