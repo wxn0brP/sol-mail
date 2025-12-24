@@ -6,13 +6,43 @@ export function getMailDate(id: string) {
 
 export function getMailDateText(date: Date) {
     const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
+    const diffMs = date.getTime() - now.getTime();
     const diffSec = Math.floor(diffMs / 1000);
     const diffMin = Math.floor(diffSec / 60);
-    const diffHour = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHour / 24);
+    const diffHrs = Math.floor(diffMin / 60);
+    const diffDays = Math.floor(diffHrs / 24);
+    const diffWeeks = Math.floor(diffDays / 7);
+    const diffMonths = Math.floor(diffDays / 30);
+    const diffYears = Math.floor(diffDays / 365);
 
-    const fullDate = date.toLocaleString(undefined, {
+    const rtf = new Intl.RelativeTimeFormat(document.documentElement.lang, { numeric: "auto" });
+    let relativeValue: number;
+    let unit: Intl.RelativeTimeFormatUnit;
+
+    if (diffYears < -1) {
+        relativeValue = diffYears;
+        unit = "year";
+    } else if (diffMonths < -1) {
+        relativeValue = diffMonths;
+        unit = "month";
+    } else if (diffWeeks < -1) {
+        relativeValue = diffWeeks;
+        unit = "week";
+    } else if (diffDays < -1) {
+        relativeValue = diffDays;
+        unit = "day";
+    } else if (diffHrs < -1) {
+        relativeValue = diffHrs;
+        unit = "hour";
+    } else if (diffMin < -1) {
+        relativeValue = diffMin;
+        unit = "minute";
+    } else {
+        relativeValue = -1;
+        unit = "second";
+    }
+
+    const fullDate = date.toLocaleString(document.documentElement.lang, {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -20,21 +50,10 @@ export function getMailDateText(date: Date) {
         minute: "2-digit"
     });
 
-    let shortDate: string;
-    if (diffDay > 0) {
-        shortDate = diffDay === 1 ? `1 ${t("day")} ${t("ago")}` : `${diffDay} ${t("days")} ${t("ago")}`;
-    } else if (diffHour > 0) {
-        shortDate = `${diffHour}h ${t("ago")}`;
-    } else if (diffMin > 0) {
-        shortDate = `${diffMin}m ${t("ago")}`;
-    } else {
-        shortDate = `${t("today")} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
-    }
-
     return {
         fullDate,
-        shortDate
-    }
+        shortDate: rtf.format(relativeValue, unit)
+    };
 }
 
 export function getMailDateElement(id: string): string {

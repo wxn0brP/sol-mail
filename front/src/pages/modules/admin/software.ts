@@ -63,8 +63,10 @@ function checkClientLatestUpdate() {
     });
 }
 
-checkVersionStatus();
-checkClientLatestUpdate();
+setTimeout(() => {
+    checkVersionStatus();
+    checkClientLatestUpdate();
+}, 500);
 
 softwarePopup.fade = false;
 qs("#toggle-software-notification").on("click", () => softwarePopup.fadeToggle());
