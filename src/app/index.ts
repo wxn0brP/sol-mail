@@ -3,6 +3,7 @@ import { createLangRouter } from "@wxn0brp/falcon-frame-lang";
 import { adminRouter } from "./admin";
 import { authMiddleware, authRouter } from "./auth";
 import { filesRouter } from "./files";
+import { dataRouter } from "./data";
 
 const router = new Router();
 
@@ -10,6 +11,7 @@ const api = router.router("/api");
 api.use(authMiddleware);
 api.use("/files", filesRouter);
 api.use("/admin", adminRouter);
+api.use("/data", dataRouter);
 
 router.use("/auth", authRouter);
 

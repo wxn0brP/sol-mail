@@ -95,10 +95,15 @@ summary {
     }
 }
 
-#toggle-software-notification {
+#controls {
     position: fixed;
     bottom: 10px;
     left: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+#toggle-software-notification {
     background: none;
     border: none;
     font-size: 1.3rem;
@@ -129,5 +134,83 @@ summary {
         border-radius: 4px;
         background-color: var(--background);
         color: var(--text-color);
+    }
+}
+
+#toggle-subjects {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    padding: 5px;
+
+    &:hover {
+        background-color: #444;
+        border-radius: 10px;
+    }
+}
+
+#manage-subjects {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1000;
+    padding: 15px;
+    background-color: var(--background);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+
+    input {
+        padding: 0.5rem;
+        margin-right: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: var(--background);
+        color: var(--text-color);
+        width: calc(100% - 60px);
+    }
+
+    button {
+        background: none;
+        border: 1px solid red;
+        cursor: pointer;
+        color: var(--text-color);
+        padding: 0.5rem;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: #444;
+        }
+    }
+
+    #manage-subjects-list {
+        margin-top: .5rem;
+        max-height: 300px;
+        overflow-y: auto;
+
+        .subject-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+
+            .remove {
+                background: none;
+                border: none;
+                color: red;
+                cursor: pointer;
+                font-size: 1.2rem;
+
+                &:hover {
+                    background: none;
+                }
+            }
+        }
     }
 }

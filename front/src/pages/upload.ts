@@ -9,6 +9,7 @@ const uploadForm = qs("form");
 const fileInput = qi("#filefield");
 const filesList = qs("#filesList");
 const mailNameInput = qi("#mailName");
+const mailNameSelect = qi("#mailNameSelect");
 const bodyInput = qi("#body");
 const message = qs("#message");
 
@@ -91,4 +92,19 @@ uploadForm.addEventListener("submit", async (event) => {
         selectedFiles = [];
         updateFilesList();
     }
+});
+
+fetch("/api/data/subjects").then(res => res.json()).then(subjects => {
+    mailNameSelect.innerHTML = `<option value="">${t("My name")}</option>`;
+    for (const subject of subjects) {
+        const option = document.createElement("option");
+        option.value = subject;
+        option.textContent = subject;
+        mailNameSelect.appendChild(option);
+    }
+});
+
+qs("#mailNameSelect").on("change", () => {
+    mailNameInput.value = mailNameSelect.value;
+    mailNameInput.style.display = mailNameSelect.value ? "none" : "";
 });

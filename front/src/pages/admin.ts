@@ -1,14 +1,11 @@
-import "#admin/software";
-import "#admin/sse";
-import { initShow } from "#mail/displayFiles";
-import "_requireLogin";
-import { checkTokenRefresh } from "_tokenRefresh";
-import "./admin.scss";
+import "#admin/mailSubjects";
 import { renderData } from "#admin/render";
 import "#admin/software";
 import "#admin/sse";
 import { GroupBy, User as UserAndMails } from "#admin/types";
+import { initShow } from "#mail/displayFiles";
 import "_requireLogin";
+import { checkTokenRefresh } from "_tokenRefresh";
 import "./admin.scss";
 
 checkTokenRefresh();

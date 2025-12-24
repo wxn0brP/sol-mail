@@ -98,6 +98,24 @@ router.get("/auto-update", async (_, res) => {
     }
 });
 
+router.post("/subject", async (req, res) => {
+    const { subject } = req.body;
+    if (!subject)
+        return res.json({ err: true, msg: "Subject is required" });
+
+    await db.master.add("subjects", { _id: subject });
+    return res.json({ err: false, msg: "Subject added" });
+});
+
+router.delete("/subject", async (req, res) => {
+    const { subject } = req.body;
+    if (!subject)
+        return res.json({ err: true, msg: "Subject is required" });
+
+    await db.master.removeOne("subjects", { _id: subject });
+    return res.json({ err: false, msg: "Subject deleted" });
+});
+
 export const sse = router.sse("/sse");
 
 export {

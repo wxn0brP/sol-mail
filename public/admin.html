@@ -7,24 +7,6 @@
     </div>
 </section>
 
-<article id="software-notification" style="display: none;">
-    <p>
-        <span translate="Version Status"></span>:
-        <span id="version-status">Checking...</span>
-    </p>
-    <p>
-        <span translate="Client latest update"></span>:
-        <span id="client-latest-update">Checking...</span>
-    </p>
-</article>
-
-<button id="toggle-software-notification">💜</button>
-
-<aside id="mail-notification" style="display: none;">
-    <span translate="New Mails">New Mails</span>:
-    <ul id="notifications"></ul>
-</aside>
-
 <section id="sorting-options-container">
     <label for="group-by">Group by:</label>
     <select id="group-by">
@@ -35,3 +17,34 @@
 
 <div id="app"></div>
 <link rel="stylesheet" href="/app/pages/mails.css">
+
+
+
+<article id="software-notification" style="display: none">
+    <p>
+        <span translate="Version Status"></span>:
+        <span id="version-status">Checking...</span>
+    </p>
+    <p>
+        <span translate="Client latest update"></span>:
+        <span id="client-latest-update">Checking...</span>
+    </p>
+</article>
+
+<article id="controls">
+    <button id="toggle-software-notification">💜</button>
+    <button id="toggle-subjects">Manage Subjects</button>
+</article>
+
+<article id="mail-notification" style="display: none;">
+    <span translate="New Mails">New Mails</span>:
+    <ul id="notifications"></ul>
+</article>
+
+<article id="manage-subjects" style="display: none">
+    <div style="display: flex">
+        <input type="text" id="add-subject-input">
+        <button id="add-subject" style="border-color: white">Add</button>
+    </div>
+    <div id="manage-subjects-list"></div>
+</article>

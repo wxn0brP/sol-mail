@@ -16,13 +16,13 @@
         "build": "bun run build.ts"
     },
     "devDependencies": {
-        "esbuild": "^0.27.0",
+        "esbuild": "^0.27.2",
         "esbuild-style-plugin": "^1.6.3",
-        "sass": "^1.94.2",
+        "sass": "^1.97.1",
         "typescript": "*"
     },
     "dependencies": {
-        "@wxn0brp/flanker-ui": "^0.4.3",
+        "@wxn0brp/flanker-ui": "^0.4.6",
         "highlight.js": "^11.11.1"
     }
 }
