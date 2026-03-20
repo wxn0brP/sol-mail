@@ -14,13 +14,13 @@ export const loginHandler: RouteHandler = async (req, res) => {
             return { err: true, msg: "Missing name or pass" };
         }
 
-        const user = await db.master.findOne<User>("users", { name });
+        const user = await db.master.users.findOne({ name });
 
         if (!user) {
             return { err: true, msg: "Invalid credentials" };
         }
 
-        if (await db.master.findOne<Token>("token", { name: user.name })) {
+        if (await db.master.token.findOne({ name: user.name })) {
             await cleanToken();
             return { err: true, msg: "User already logged in" };
         }
@@ -37,7 +37,7 @@ export const loginHandler: RouteHandler = async (req, res) => {
             { _id: user._id, name: user.name },
             expirationTime
         );
-        await db.master.add("token", { _id: token, name: user.name, exp: exp.getTime() });
+        await db.master.token.add({ _id: token, name: user.name, exp: exp.getTime() });
 
         return {
             err: false,

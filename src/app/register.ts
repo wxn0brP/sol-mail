@@ -11,7 +11,7 @@ export const registerHandler: RouteHandler = async (req, res) => {
             return { err: true, msg: "Missing name or pass" };
         }
 
-        const existingUser = await db.master.findOne<User>("users", { name });
+        const existingUser = await db.master.users.findOne({ name });
 
         if (existingUser) {
             return { err: true, msg: "User already exists" };
@@ -24,7 +24,7 @@ export const registerHandler: RouteHandler = async (req, res) => {
             pass: hashedPassword
         };
 
-        await db.master.add("users", user);
+        await db.master.users.add(user);
         console.log("User created:", user.name);
 
         return { err: false, msg: "User created successfully" };

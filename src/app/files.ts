@@ -42,7 +42,7 @@ router.customParser("/:mailName", async (req, res) => {
             return res.json({ err: true, msg: "Mail name is required" });
         }
 
-        const userType = await db.master.findOne<any>("users", { _id: user._id });
+        const userType = await db.master.users.findOne({ _id: user._id });
         const isAdmin = userType?.admin;
         if (isAdmin)
             user.name = "public";
@@ -115,7 +115,7 @@ router.customParser("/:mailName", async (req, res) => {
                 res.json({ err: false, msg: "File uploaded successfully" });
 
                 mail.txt = additionalFields.body;
-                const m = await db.mail.add(sanitizedUserName, mail);
+                const m = await db.mail.c(sanitizedUserName).add(mail);
                 sse.sendAll({
                     ...m,
                     user: user.name
@@ -165,7 +165,7 @@ router.get("/mails", async (req, res) => {
         if (req.query.public) user.name = "public";
 
         const sanitizedUserName = sanitizeDirName(user.name);
-        return await db.mail.find(sanitizedUserName);
+        return await db.mail.c(sanitizedUserName).find();
     } catch (error) {
         console.error("Error listing mail files:", error);
         res.status(500);

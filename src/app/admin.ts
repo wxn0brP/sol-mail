@@ -4,7 +4,6 @@ import { execSync } from "child_process";
 import { existsSync, rmSync } from "fs";
 import { join } from "path";
 import { db } from "../db";
-import { User } from "../types/auth";
 import { sanitizeDirName, sanitizeFileName } from "../utils/sanitize";
 
 const router = new Router();
@@ -13,7 +12,7 @@ const checkAdmin: RouteHandler = async (req, _, next) => {
     const user = req.user;
     if (!user) return { err: true, msg: "Unauthorized" };
 
-    const dbUser = await db.master.findOne<User>("users", { _id: user._id });
+    const dbUser = await db.master.users.findOne({ _id: user._id });
     if (!dbUser || dbUser.admin !== true) return { err: true, msg: "Unauthorized" };
 
     next();
@@ -22,7 +21,7 @@ const checkAdmin: RouteHandler = async (req, _, next) => {
 router.use(checkAdmin);
 
 router.get("/users", async (_, res) => {
-    const users = await db.master.find<User>("users", {}, {}, { select: ["name"] });
+    const users = await db.master.users.find({}, {}, { select: ["name"] });
     return res.json(users.map(user => user.name));
 });
 
@@ -30,7 +29,7 @@ router.get("/user-data", async () => {
     const users = await db.mail.getCollections();
     const result = [];
     for (const user of users) {
-        const mails = await db.mail.find(user);
+        const mails = await db.mail.c(user).find();
         result.push({ name: user, mails });
     }
 
@@ -103,7 +102,7 @@ router.post("/subject", async (req, res) => {
     if (!subject)
         return res.json({ err: true, msg: "Subject is required" });
 
-    await db.master.add("subjects", { _id: subject });
+    await db.master.subjects.add({ _id: subject });
     return res.json({ err: false, msg: "Subject added" });
 });
 
@@ -112,7 +111,7 @@ router.delete("/subject", async (req, res) => {
     if (!subject)
         return res.json({ err: true, msg: "Subject is required" });
 
-    await db.master.removeOne("subjects", { _id: subject });
+    await db.master.subjects.removeOne({ _id: subject });
     return res.json({ err: false, msg: "Subject deleted" });
 });
 

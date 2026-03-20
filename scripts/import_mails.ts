@@ -1,4 +1,4 @@
-import { Valthera } from "@wxn0brp/db";
+import { ValtheraCreate } from "@wxn0brp/db";
 import fs from "fs";
 import path from "path";
 import { sanitizeDirName, sanitizeFileName } from "../src/utils/sanitize";
@@ -11,7 +11,7 @@ if (!fs.existsSync(IMPORT_DIR)) {
     process.exit(1);
 }
 
-const dbMail = new Valthera("data/mail");
+const dbMail = ValtheraCreate("data/mail");
 
 const mailDirs = fs.readdirSync(IMPORT_DIR, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
@@ -42,7 +42,7 @@ for (const mailDirName of mailDirs) {
         files: sanitizedFiles,
     };
 
-    await dbMail.add("public", mail);
+    await dbMail.c("public").add(mail);
     fs.rmdirSync(sourceDir, { recursive: true });
 
     console.log(`Imported mail: ${sanitizedMailName}`);

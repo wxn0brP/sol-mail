@@ -7,11 +7,11 @@ export interface Token {
 }
 
 export async function cleanToken() {
-    const tokens = await db.master.find<Token>("token");
+    const tokens = await db.master.token.find();
 
     for (const token of tokens) {
         if (token.exp < Date.now()) {
-            await db.master.removeOne("token", { _id: token._id });
+            await db.master.token.removeOne({ _id: token._id });
         }
     }
 }

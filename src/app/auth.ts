@@ -16,7 +16,7 @@ export const inDbCache = new AnotherCache<Token>({
 
 router.post("/logout", async (req) => {
     if (!req.cookies.token) return { msg: "Error" };
-    await db.master.removeOne("token", { _id: req.cookies.token });
+    await db.master.token.removeOne({ _id: req.cookies.token });
     return { msg: "Logout successful" };
 });
 
@@ -55,7 +55,7 @@ const authMiddleware: RouteHandler = async (req, res, next) => {
 
     if (!inDbCache.has(token)) {
         await cleanToken();
-        const inDbToken = await db.master.findOne<Token>("token", { _id: token });
+        const inDbToken = await db.master.token.findOne({ _id: token });
         if (!inDbToken) {
             res.status(401);
             return res.json({ msg: "Unauthorized" });
@@ -63,7 +63,7 @@ const authMiddleware: RouteHandler = async (req, res, next) => {
 
         if (inDbToken.exp < Date.now()) {
             res.status(401);
-            await db.master.removeOne("token", { _id: token });
+            await db.master.token.removeOne({ _id: token });
             return res.json({ msg: "Unauthorized" });
         }
 
