@@ -27,8 +27,8 @@
     "dependencies": {
         "@wxn0brp/ac": "^0.0.3",
         "@wxn0brp/db": "^0.100.0",
-        "@wxn0brp/falcon-frame": "^0.7.1",
-        "@wxn0brp/falcon-frame-lang": "^0.1.0",
+        "@wxn0brp/falcon-frame": "^0.8.0",
+        "@wxn0brp/falcon-frame-lang": "^0.1.1",
         "busboy": "^1.6.0",
         "dotenv": "^17.3.1",
         "jose": "^6.2.2"

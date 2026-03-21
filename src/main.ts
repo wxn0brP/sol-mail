@@ -7,7 +7,6 @@ if (!process.env.JWT_SECRET) {
 }
 
 const app = new FalconFrame();
-app.setVar("layout", "public/layout.html");
 
 app.get("/server.find", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
