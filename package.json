@@ -1,36 +1,36 @@
 {
-    "name": "@wxn0brp/sol-mail",
-    "version": "0.0.1",
-    "main": "src/index.ts",
-    "description": "",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/wxn0brP/sol-mail.git"
-    },
-    "homepage": "https://github.com/wxn0brP/sol-mail",
-    "author": "wxn0brP",
-    "license": "MIT",
-    "type": "module",
-    "scripts": {
-        "start": "bun run src/index.ts",
-        "setup": "bun install && cd front && bun install && bun run build.ts && cd ..",
-        "script:add_admin": "bun run scripts/add_admin.ts",
-        "script:add_user": "bun run scripts/add_user.ts",
-        "script:create_user": "bun run scripts/add_user.ts",
-        "script:import_mails": "bun run scripts/import_mails.ts"
-    },
-    "devDependencies": {
-        "@types/bun": "*",
-        "@types/busboy": "^1.5.4",
-        "typescript": "*"
-    },
-    "dependencies": {
-        "@wxn0brp/ac": "^0.0.3",
-        "@wxn0brp/db": "^0.100.0",
-        "@wxn0brp/falcon-frame": "^0.8.0",
-        "@wxn0brp/falcon-frame-lang": "^0.1.1",
-        "busboy": "^1.6.0",
-        "dotenv": "^17.3.1",
-        "jose": "^6.2.2"
-    }
+	"name": "@wxn0brp/sol-mail",
+	"version": "0.0.1",
+	"main": "src/index.ts",
+	"description": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wxn0brP/sol-mail.git"
+	},
+	"homepage": "https://github.com/wxn0brP/sol-mail",
+	"author": "wxn0brP",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"start": "bun run src/index.ts",
+		"setup": "bun install && cd front && bun install && bun run build.ts && cd ..",
+		"script:add_admin": "bun run scripts/add_admin.ts",
+		"script:add_user": "bun run scripts/add_user.ts",
+		"script:create_user": "bun run scripts/add_user.ts",
+		"script:import_mails": "bun run scripts/import_mails.ts"
+	},
+	"devDependencies": {
+		"@types/bun": "*",
+		"@types/busboy": "^1.5.4",
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@wxn0brp/ac": "^0.0.3",
+		"@wxn0brp/db": "^0.100.0",
+		"@wxn0brp/falcon-frame": "^0.8.0",
+		"@wxn0brp/falcon-frame-lang": "^0.1.1",
+		"busboy": "^1.6.0",
+		"dotenv": "^17.3.1",
+		"jose": "^6.2.2"
+	}
 }
