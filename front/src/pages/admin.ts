@@ -11,16 +11,18 @@ import "./admin.scss";
 checkTokenRefresh();
 export const app = qs("#app");
 const groupBySelect = qs<HTMLSelectElement>("#group-by");
-export const data = await fetch("/api/admin/user-data").then(res => res.json()) as UserAndMails[];
+export const data = (await fetch("/api/admin/user-data").then(res =>
+	res.json(),
+)) as UserAndMails[];
 
 if (data) {
-    renderData(groupBySelect.value as GroupBy);
+	renderData(groupBySelect.value as GroupBy);
 
-    groupBySelect.addEventListener("change", () => {
-        renderData(groupBySelect.value as GroupBy);
-    });
+	groupBySelect.addEventListener("change", () => {
+		renderData(groupBySelect.value as GroupBy);
+	});
 
-    initShow(app);
+	initShow(app);
 } else {
-    app.innerHTML = `<p class="error-message">${t("Could not connect to the server")}.</p>`;
+	app.innerHTML = `<p class="error-message">${t("Could not connect to the server")}.</p>`;
 }

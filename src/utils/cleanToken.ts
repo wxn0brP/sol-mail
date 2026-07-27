@@ -1,19 +1,21 @@
 import { db } from "../db";
 
 export interface Token {
-    _id: string,
-    name: string,
-    exp: number
+	_id: string;
+	name: string;
+	exp: number;
 }
 
 export async function cleanToken() {
-    const tokens = await db.master.token.find();
+	const tokens = await db.master.token.find();
 
-    for (const token of tokens) {
-        if (token.exp < Date.now()) {
-            await db.master.token.removeOne({ _id: token._id });
-        }
-    }
+	for (const token of tokens) {
+		if (token.exp < Date.now()) {
+			await db.master.token.removeOne({
+				_id: token._id,
+			});
+		}
+	}
 }
 
 setInterval(cleanToken, 10 * 60 * 1000);

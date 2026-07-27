@@ -1,0 +1,19 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
+	"extends": [
+		"@wxn0brp/biome"
+	],
+	"files": {
+		"includes": [
+			"src/**/*",
+			"front/src/**/*"
+		]
+	},
+	"linter": {
+		"rules": {
+			"suspicious": {
+				"noDocumentCookie": "off"
+			}
+		}
+	}
+}

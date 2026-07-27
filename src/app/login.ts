@@ -1,54 +1,80 @@
 import { RouteHandler } from "@wxn0brp/falcon-frame";
 import { createHash } from "crypto";
 import { db } from "../db";
-import { User } from "../types/auth";
+import { cleanToken } from "../utils/cleanToken";
 import { setToken } from "../utils/token";
 import { cache } from "./auth";
-import { cleanToken, Token } from "../utils/cleanToken";
 
 export const loginHandler: RouteHandler = async (req, res) => {
-    try {
-        const { name, pass } = req.body;
+	try {
+		const { name, pass } = req.body;
 
-        if (!name || !pass) {
-            return { err: true, msg: "Missing name or pass" };
-        }
+		if (!name || !pass) {
+			return {
+				err: true,
+				msg: "Missing name or pass",
+			};
+		}
 
-        const user = await db.master.users.findOne({ name });
+		const user = await db.master.users.findOne({
+			name,
+		});
 
-        if (!user) {
-            return { err: true, msg: "Invalid credentials" };
-        }
+		if (!user) {
+			return {
+				err: true,
+				msg: "Invalid credentials",
+			};
+		}
 
-        if (await db.master.token.findOne({ name: user.name })) {
-            await cleanToken();
-            return { err: true, msg: "User already logged in" };
-        }
+		if (
+			await db.master.token.findOne({
+				name: user.name,
+			})
+		) {
+			await cleanToken();
+			return {
+				err: true,
+				msg: "User already logged in",
+			};
+		}
 
-        const hashedPassword = createHash("sha256").update(pass).digest("hex");
+		const hashedPassword = createHash("sha256").update(pass).digest("hex");
 
-        if (user.pass !== hashedPassword) {
-            return { err: true, msg: "Invalid credentials" };
-        }
+		if (user.pass !== hashedPassword) {
+			return {
+				err: true,
+				msg: "Invalid credentials",
+			};
+		}
 
-        const { exp, token, expirationTime } = await setToken(user);
-        cache.set(
-            token,
-            { _id: user._id, name: user.name },
-            expirationTime
-        );
-        await db.master.token.add({ _id: token, name: user.name, exp: exp.getTime() });
+		const { exp, token, expirationTime } = await setToken(user);
+		cache.set(
+			token,
+			{
+				_id: user._id,
+				name: user.name,
+			},
+			expirationTime,
+		);
+		await db.master.token.add({
+			_id: token,
+			name: user.name,
+			exp: exp.getTime(),
+		});
 
-        return {
-            err: false,
-            msg: "Login successful",
-            expiresAt: exp.getTime(),
-            token,
-            name: user.name
-        };
-    } catch (error) {
-        console.error(error);
-        res.status(500);
-        return res.json({ message: "Internal Server Error" });
-    }
+		return {
+			err: false,
+			msg: "Login successful",
+			expiresAt: exp.getTime(),
+			token,
+			name: user.name,
+		};
+	} catch (error) {
+		console.error(error);
+		res.status(500);
+		return res.json({
+			message: "Internal Server Error",
+		});
+	}
 };

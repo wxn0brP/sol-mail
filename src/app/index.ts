@@ -20,19 +20,30 @@ app.static("/", "public/assets");
 app.static("/lang", "public/lang");
 app.static("/", "front/dist");
 
-router.get("/page/:name", createLangRouter({
-    meta: {
-        login: { title: "Login" },
-        register: { title: "Register" },
-        mails: { title: "Mails" },
-        upload: { title: "Upload Files" },
-        admin: { title: "Admin" }
-    },
-    dir: "public",
-    langDir: "public/lang",
-    layout: "public/layout.html",
-}));
+router.get(
+	"/page/:name",
+	createLangRouter({
+		meta: {
+			login: {
+				title: "Login",
+			},
+			register: {
+				title: "Register",
+			},
+			mails: {
+				title: "Mails",
+			},
+			upload: {
+				title: "Upload Files",
+			},
+			admin: {
+				title: "Admin",
+			},
+		},
+		dir: "public",
+		langDir: "public/lang",
+		layout: "public/layout.html",
+	}),
+);
 
-export {
-    router as masterRouter
-};
+export { router as masterRouter };

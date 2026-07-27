@@ -21,14 +21,14 @@ hljs.registerLanguage("markdown", markdown);
 hljs.registerLanguage("plaintext", plaintext);
 
 export async function openFilePopup(url: string, filename: string) {
-    const existingPopup = document.querySelector(".file-popup");
-    if (existingPopup) {
-        existingPopup.remove();
-    }
+	const existingPopup = document.querySelector(".file-popup");
+	if (existingPopup) {
+		existingPopup.remove();
+	}
 
-    const popup = document.createElement("div");
-    popup.className = "file-popup";
-    popup.innerHTML = `
+	const popup = document.createElement("div");
+	popup.className = "file-popup";
+	popup.innerHTML = `
         <div class="popup-content">
             <div class="popup-header">
                 <h3>${filename}</h3>
@@ -38,43 +38,48 @@ export async function openFilePopup(url: string, filename: string) {
         </div>
     `;
 
-    document.body.appendChild(popup);
+	document.body.appendChild(popup);
 
-    popup.querySelector(".close-popup")?.addEventListener("click", () => popup.remove());
-    popup.addEventListener("click", (e) => {
-        if (e.target === popup) popup.remove();
-    });
+	popup
+		.querySelector(".close-popup")
+		?.addEventListener("click", () => popup.remove());
+	popup.addEventListener("click", e => {
+		if (e.target === popup) popup.remove();
+	});
 
-    const previewContainer = popup.querySelector(".file-preview-container") as HTMLElement;
-    const extension = filename.split(".").pop()?.toLowerCase() || "";
-    const language = code[extension];
+	const previewContainer = popup.querySelector(
+		".file-preview-container",
+	) as HTMLElement;
+	const extension = filename.split(".").pop()?.toLowerCase() || "";
+	const language = code[extension];
 
-    if (image.includes(extension)) {
-        previewContainer.innerHTML = `<img src="${url}" alt="${filename}">`;
-    } else if (language) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
-            const text = await response.text();
+	if (image.includes(extension)) {
+		previewContainer.innerHTML = `<img src="${url}" alt="${filename}">`;
+	} else if (language) {
+		try {
+			const response = await fetch(url);
+			if (!response.ok)
+				throw new Error(`Failed to fetch: ${response.statusText}`);
+			const text = await response.text();
 
-            const code = document.createElement("code");
-            code.className = `language-${language}`;
-            code.textContent = text;
+			const code = document.createElement("code");
+			code.className = `language-${language}`;
+			code.textContent = text;
 
-            const pre = document.createElement("pre");
-            pre.appendChild(code);
+			const pre = document.createElement("pre");
+			pre.appendChild(code);
 
-            previewContainer.innerHTML = "";
-            previewContainer.appendChild(pre);
+			previewContainer.innerHTML = "";
+			previewContainer.appendChild(pre);
 
-            hljs.highlightElement(code);
-        } catch (e) {
-            console.error(e);
-            previewContainer.innerHTML = `<p>${t("Could not load file preview")}.</p>`;
-        }
-    } else if (video.includes(extension)) {
-        previewContainer.innerHTML = `<video src="${url}" controls></video>`;
-    } else if (audio.includes(extension)) {
-        previewContainer.innerHTML = `<audio src="${url}" controls></audio>`;
-    }
+			hljs.highlightElement(code);
+		} catch (e) {
+			console.error(e);
+			previewContainer.innerHTML = `<p>${t("Could not load file preview")}.</p>`;
+		}
+	} else if (video.includes(extension)) {
+		previewContainer.innerHTML = `<video src="${url}" controls></video>`;
+	} else if (audio.includes(extension)) {
+		previewContainer.innerHTML = `<audio src="${url}" controls></audio>`;
+	}
 }
