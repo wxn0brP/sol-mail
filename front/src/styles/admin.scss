@@ -1,0 +1,232 @@
+#admin-content {
+	max-width: 900px;
+	margin: 0 auto;
+
+	summary {
+		padding: 8px 0;
+		margin-bottom: 1rem;
+		color: var(--accent-text);
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.mails-container {
+		margin-bottom: 2rem;
+	}
+}
+
+#search-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 900px;
+	max-width: 100%;
+	margin-inline: auto;
+	margin-bottom: 10px;
+
+	#search {
+		width: 600px;
+		max-width: 100%;
+		min-height: 44px;
+		padding: 0.5rem;
+		margin-bottom: 1rem;
+		background-color: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		color: var(--txt);
+		box-sizing: border-box;
+
+		&:focus-visible {
+			outline: 2px solid var(--accent-text);
+			outline-offset: 2px;
+			border-color: var(--accent);
+		}
+	}
+
+	#search-clear {
+		min-height: 44px;
+		padding: 0.5rem 1rem;
+		background-color: var(--back);
+		border: 1px solid var(--red);
+		border-radius: var(--radius-md);
+		color: var(--red-text);
+		cursor: pointer;
+		transition: background-color 0.2s, color 0.2s;
+
+		&:hover {
+			background-color: var(--red);
+			color: var(--back);
+		}
+	}
+}
+
+#sorting-options-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	margin-bottom: 1rem;
+
+	select {
+		min-height: 44px;
+		padding: 0.5rem;
+		background-color: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		color: var(--txt);
+	}
+}
+
+#notifications-bar {
+	position: fixed;
+	top: 90px;
+	left: 10px;
+	z-index: 900;
+	max-width: 300px;
+	max-height: 60vh;
+	padding: 10px;
+	background-color: var(--surface);
+	overflow-y: auto;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+
+	&:empty {
+		display: none;
+	}
+
+	ul {
+		margin-top: 0.5rem;
+		list-style: none;
+	}
+
+	li {
+		button {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			min-height: 44px;
+			padding: 4px 0;
+			background: none;
+			border: none;
+			color: var(--txt);
+			text-align: left;
+			cursor: pointer;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+#software-notification {
+	max-width: 500px;
+	margin: 2rem auto;
+	padding: 15px;
+	background-color: var(--surface);
+	border: 1px solid var(--accent);
+	border-radius: var(--radius-md);
+	color: var(--txt);
+
+	.status-update {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0 4px;
+		background: none;
+		border: none;
+		color: inherit;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+#manage-subjects {
+	max-width: 500px;
+	margin: 2rem auto;
+	padding: 15px;
+	background-color: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+
+	.subject-add {
+		display: flex;
+	}
+
+	input {
+		width: calc(100% - 70px);
+		min-height: 44px;
+		padding: 0.5rem;
+		margin-right: 0.5rem;
+		background-color: var(--surface-2);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		color: var(--txt);
+	}
+
+	button {
+		min-height: 44px;
+		padding: 0.5rem;
+		background: none;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		color: var(--txt);
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--surface-hover);
+		}
+
+		&#add-subject {
+			border-color: var(--accent);
+		}
+	}
+
+	#manage-subjects-list {
+		max-height: 300px;
+		margin-top: 0.5rem;
+		overflow-y: auto;
+
+		.subject-item {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			padding: 4px 0;
+			border-bottom: 1px solid var(--border);
+
+			.subject-name {
+				flex: 1;
+				min-width: 0;
+				padding: 0.5rem 0;
+				color: var(--txt);
+				word-break: break-word;
+			}
+
+			.remove {
+				display: inline-flex;
+				flex: 0 0 auto;
+				justify-content: center;
+				align-items: center;
+				width: 44px;
+				height: 44px;
+				min-height: 44px;
+				padding: 0;
+				background: transparent;
+				border: 1px solid transparent;
+				border-radius: var(--radius-md);
+				color: var(--txt-muted);
+				font-size: 1.35rem;
+				line-height: 1;
+				cursor: pointer;
+
+				&:hover,
+				&:focus-visible {
+					background: var(--red-soft);
+					border-color: var(--red);
+					color: var(--red-text);
+				}
+			}
+		}
+	}
+}

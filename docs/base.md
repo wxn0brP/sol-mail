@@ -18,7 +18,7 @@ Sol Mail is a self-hosted file and message submission portal designed with the f
 
 ### Overall Architecture
 - **Backend**: Built with TypeScript and Bun using the `@wxn0brp/falcon-frame` web framework
-- **Frontend**: TypeScript and SCSS, with assets built using esbuild
+- **Frontend**: TypeScript/TSX and SCSS, bundled with pressure (esbuild + vhtml). Two SPAs: user (`/`) and admin (`/admin`), hash routing
 - **Database**: Uses `@wxn0brp/db` (Valthera database) for data persistence
 - **Authentication**: JWT-based authentication system with token management
 

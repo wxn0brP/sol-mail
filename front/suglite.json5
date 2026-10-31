@@ -1,10 +1,6 @@
 {
-    cmd: "tsc --noEmit && bun run build.js --dev",
-    watch: [
-        "src"
-    ],
-    restart_cmd: "clear",
-    events: {
-        rs: "clear"
-    }
+	cmd: "tsc --noEmit && pressure --no-minify",
+	watch: [
+		"src"
+	]
 }

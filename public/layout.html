@@ -2,44 +2,33 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="color-scheme" content="dark">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sol Mail | {{ title }}</title>
-    <link rel="stylesheet" href="/app/index.css">
-    <link rel="shortcut icon" href="/app/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="/app/favicon.svg" type="image/svg+xml">
+	<meta charset="UTF-8">
+	<meta name="color-scheme" content="dark">
+	<meta name="theme-color" content="#212121">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ title }}</title>
+	<link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+	<link rel="stylesheet" href="{{ css }}">
 </head>
 
 <body>
-    <nav>
-        <p>☰</p>
-        <div id="who-div">👤 <span id="who" translate="Click to reveal">Click to reveal</span></div>
-        <ul>
-            <li><a href="/page/upload" translate="Upload Files"></a></li>
-            <li><a href="/page/mails" translate="View Your Mails"></a></li>
-            <li><a href="/page/mails?public=true" translate="View Public Mails"></a></li>
-            <li><a href="#" onclick="logout()" translate="Logout"></a></li>
-            <li><a href="#" id="change-lang">🌐</a></li>
-        </ul>
-        <div id="open-info">💜</div>
-    </nav>
-    <div id="popup-container"></div>
-    <script src="/app/html.js"></script>
-    {{ body }}
-    <footer style="display: none;">
-        <p>Sol Mail - Self-Hosted File & Message Portal</p>
-        <p>
-            Made with 💜 by
-            <a href="https://github.com/wxn0brP" target="_blank" style="color: var(--accent);">@wxn0brP</a>
-        </p>
-    </footer>
-    <script src="/app/lang.js"></script>
-    <script src="/app/pages/logout.js" type="module"></script>
-    <script src="/app/pages/{{ name }}.js" type="module"></script>
-    <link rel="stylesheet" href="/app/pages/{{ name }}.css">
-    <script src="/app/as.js" type="module"></script>
-    <script src="/app/pages/lang.js" type="module"></script>
+	<nav id="nav"></nav>
+	{{ body }}
+	<footer style="display: none;">
+		<p>Sol Mail - Self-Hosted File & Message Portal</p>
+		<p>
+			Made with 💜 by
+			<a
+				href="https://github.com/wxn0brP"
+				target="_blank"
+				rel="noopener noreferrer"
+				style="color: var(--accent-text);">
+				@wxn0brP
+			</a>
+		</p>
+	</footer>
+	<div id="popup-container"></div>
 </body>
 
 </html>

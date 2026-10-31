@@ -1,0 +1,97 @@
+@use "./auth-form" as *;
+
+#upload-view {
+	h1 {
+		@include auth-heading;
+	}
+
+	form {
+		@include auth-panel;
+
+		max-width: 500px;
+
+		div {
+			@include auth-field-group;
+		}
+
+		input[type="text"],
+		textarea,
+		select {
+			@include auth-control;
+		}
+
+		textarea {
+			min-height: 80px;
+			resize: vertical;
+		}
+
+		input[type="file"] {
+			color: var(--txt-muted);
+			font-size: 0.9rem;
+
+			&::file-selector-button {
+				margin-right: 1rem;
+				padding: 0.8rem 1.2rem;
+				background: var(--accent);
+				color: var(--on-accent);
+				border: none;
+				border-radius: var(--radius-md);
+				font-weight: 600;
+				cursor: pointer;
+				transition: background-color 0.2s;
+
+				&:hover {
+					background: var(--accent2);
+				}
+			}
+		}
+
+		button[type="submit"] {
+			@include auth-submit;
+		}
+	}
+
+	#filesList {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 8px;
+			margin: 5px 0;
+			background-color: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: var(--radius-md);
+		}
+
+		span {
+			flex-grow: 1;
+			padding-right: 10px;
+			color: var(--txt);
+			word-break: break-all;
+		}
+
+		button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 44px;
+			height: 44px;
+			background-color: var(--red);
+			border: none;
+			border-radius: 50%;
+			color: var(--back);
+			font-weight: 600;
+			cursor: pointer;
+			transition: background-color 0.2s, color 0.2s;
+
+			&:hover {
+				background-color: var(--red-dark);
+				color: var(--on-accent);
+			}
+		}
+	}
+}

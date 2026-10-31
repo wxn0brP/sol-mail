@@ -1,0 +1,41 @@
+@use "./auth-form" as *;
+
+#login-view {
+	h1 {
+		@include auth-heading;
+	}
+
+	form {
+		@include auth-panel;
+
+		max-width: 400px;
+
+		div {
+			@include auth-field-group;
+		}
+	}
+
+	input[type="text"],
+	input[type="password"] {
+		@include auth-control;
+	}
+
+	button[type="submit"] {
+		@include auth-submit;
+
+		margin-top: 1rem;
+	}
+
+	.switch-mode {
+		margin-top: 1rem;
+		text-align: center;
+
+		a {
+			color: var(--accent-text);
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}

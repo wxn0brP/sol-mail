@@ -1,0 +1,66 @@
+@mixin auth-heading {
+	text-align: center;
+	margin-bottom: 2.5rem;
+	font-size: 2.5rem;
+	color: var(--accent-text);
+	font-weight: 700;
+}
+
+@mixin auth-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	margin: 2rem auto;
+	padding: 2.5rem;
+	background: var(--surface-2);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+@mixin auth-field-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	label {
+		font-weight: 600;
+		color: var(--txt);
+		font-size: 0.9rem;
+	}
+}
+
+@mixin auth-control {
+	width: 100%;
+	padding: 1rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	background-color: var(--surface);
+	color: var(--txt);
+	font-size: 1rem;
+	box-sizing: border-box;
+	transition: border-color 0.2s, background-color 0.2s;
+
+	&:focus-visible {
+		outline: 2px solid var(--accent-text);
+		outline-offset: 2px;
+		border-color: var(--accent);
+		background-color: var(--surface-2);
+	}
+}
+
+@mixin auth-submit {
+	padding: 1rem;
+	background: var(--accent);
+	color: var(--on-accent);
+	border: none;
+	border-radius: var(--radius-md);
+	font-size: 1.1rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background-color 0.2s;
+
+	&:hover {
+		background: var(--accent2);
+	}
+}

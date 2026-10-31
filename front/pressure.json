@@ -1,0 +1,11 @@
+{
+	"entryPoints": [
+		"src/user/index.tsx",
+		"src/admin/index.tsx"
+	],
+	"dir": "dist",
+	"html": [],
+	"jsx": true,
+	"gen": false,
+	"minify": true
+}

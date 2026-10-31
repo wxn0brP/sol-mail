@@ -69,6 +69,7 @@ export const loginHandler: RouteHandler = async (req, res) => {
 			expiresAt: exp.getTime(),
 			token,
 			name: user.name,
+			admin: user.admin === true,
 		};
 	} catch (error) {
 		console.error(error);

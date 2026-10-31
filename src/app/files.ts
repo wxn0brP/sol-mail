@@ -34,9 +34,8 @@ router.customParser("/:mailName", async (req, res) => {
 	try {
 		const user = req.user;
 		if (!user) {
-			res.writeHead(401, {
-				Connection: "close",
-			});
+			res.setHeader("Connection", "close");
+			res.status(401);
 			return res.json({
 				err: true,
 				msg: "Unauthorized",
@@ -45,9 +44,8 @@ router.customParser("/:mailName", async (req, res) => {
 
 		const mailName = req.params.mailName;
 		if (!mailName) {
-			res.writeHead(400, {
-				Connection: "close",
-			});
+			res.setHeader("Connection", "close");
+			res.status(400);
 			return res.json({
 				err: true,
 				msg: "Mail name is required",
@@ -68,9 +66,8 @@ router.customParser("/:mailName", async (req, res) => {
 				path.join("data", "files", sanitizedUserName, sanitizedMailName),
 			)
 		) {
-			res.writeHead(409, {
-				Connection: "close",
-			});
+			res.setHeader("Connection", "close");
+			res.status(409);
 			return res.json({
 				err: true,
 				msg: "Mail directory already exists",
@@ -87,6 +84,18 @@ router.customParser("/:mailName", async (req, res) => {
 		};
 
 		let requestAborted = false;
+		let responseSent = false;
+
+		const fail = (status: number, msg: string) => {
+			if (responseSent) return;
+			responseSent = true;
+			res.setHeader("Connection", "close");
+			res.status(status);
+			res.json({
+				err: true,
+				msg,
+			});
+		};
 
 		const bb = busboy({
 			headers: req.headers,
@@ -123,7 +132,12 @@ router.customParser("/:mailName", async (req, res) => {
 			const saveTo = path.join(mailDir, sanitizedFileName);
 			console.log(`Uploading to: ${saveTo}`);
 
-			const uploadPromise = pipeline(file, fs.createWriteStream(saveTo));
+			const uploadPromise = pipeline(file, fs.createWriteStream(saveTo)).catch(
+				err => {
+					if (requestAborted) return;
+					throw err;
+				},
+			);
 			uploads.push(uploadPromise);
 
 			mail.files.push(filename);
@@ -138,13 +152,7 @@ router.customParser("/:mailName", async (req, res) => {
 					force: true,
 				});
 
-				res.writeHead(413, {
-					Connection: "close",
-				});
-				res.json({
-					err: true,
-					msg: `File ${filename} is too large.`,
-				});
+				fail(413, `File ${filename} is too large.`);
 				file.resume();
 			});
 		});
@@ -154,13 +162,6 @@ router.customParser("/:mailName", async (req, res) => {
 
 			try {
 				await Promise.all(uploads);
-				res.writeHead(200, {
-					Connection: "close",
-				});
-				res.json({
-					err: false,
-					msg: "File uploaded successfully",
-				});
 
 				mail.txt = additionalFields.body;
 				const m = await db.mail.c(sanitizedUserName).add(mail);
@@ -168,52 +169,38 @@ router.customParser("/:mailName", async (req, res) => {
 					...m,
 					user: user.name,
 				});
+
+				if (responseSent) return;
+				responseSent = true;
+				res.setHeader("Connection", "close");
+				res.status(200);
+				res.json({
+					err: false,
+					msg: "File uploaded successfully",
+				});
 			} catch (err) {
 				console.error("Pipeline failed.", err);
-				if (!res._ended) {
-					res.writeHead(500, {
-						Connection: "close",
-					});
-					res.json({
-						err: true,
-						msg: "An error occurred during file upload.",
-					});
-				}
+				fail(500, "An error occurred during file upload.");
 			}
 		});
 
 		bb.on("error", err => {
 			console.error("Busboy error:", err);
-			if (!res._ended) {
-				res.writeHead(500, {
-					Connection: "close",
-				});
-				res.json({
-					err: true,
-					msg: "An error occurred during file upload.",
-				});
-			}
+			fail(500, "An error occurred during file upload.");
 		});
 
 		bb.on("filesLimit", () => {
 			console.warn(`Too many files uploaded. Limit is ${MAX_FILES_COUNT}.`);
 			requestAborted = true;
-			res.writeHead(413, {
-				Connection: "close",
-			});
-			res.json({
-				err: true,
-				msg: `Too many files uploaded. Limit is ${MAX_FILES_COUNT}.`,
-			});
+			fail(413, `Too many files uploaded. Limit is ${MAX_FILES_COUNT}.`);
 		});
 
 		req.pipe(bb);
 	} catch (error) {
 		console.error("Error setting up busboy:", error);
-		if (!res._ended) {
-			res.writeHead(500, {
-				Connection: "close",
-			});
+		if (!res.headersSent) {
+			res.setHeader("Connection", "close");
+			res.status(500);
 			res.json({
 				err: true,
 				msg: "An error occurred during file upload.",

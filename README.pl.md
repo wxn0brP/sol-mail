@@ -18,7 +18,7 @@ Sol-Mail to samodzielnie hostowany portal do przesyłania plików i wiadomości.
 - [Klient Sol Mail](https://github.com/wxn0brP/sol-mail-client)
 - [Zrzuty ekranu](https://github.com/wxn0brP/sol-mail-client/blob/master/screenshots.md)
 
-## 🚀 Pierwsze kroki
+## Pierwsze kroki
 
 Wykonaj poniższe kroki, aby uruchomić własną instancję Sol-Mail w kilka minut.
 
@@ -116,7 +116,7 @@ Skrypt:
 ### Stos technologiczny
 
 - **Backend**: TypeScript, Bun, `@wxn0brp/falcon-frame` (framework webowy), `@wxn0brp/db` (baza danych), `jose` (JWT)
-- **Frontend**: TypeScript, SCSS, esbuild, `@wxn0brp/flanker-ui` (komponenty UI)
+- **Frontend**: TypeScript/TSX, SCSS, pressure, `@wxn0brp/flanker-ui` (komponenty UI)
 
 ### Dokumentacja
 
