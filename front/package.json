@@ -20,7 +20,7 @@
 		"typescript": "^7"
 	},
 	"dependencies": {
-		"@wxn0brp/flanker-ui": "^0.5.4",
+		"@wxn0brp/flanker-ui": "^0.6.0",
 		"highlight.js": "^11.12.0"
 	}
 }
